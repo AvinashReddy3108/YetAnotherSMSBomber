@@ -31,7 +31,8 @@ target = str(args.target)
 no_of_threads = args.threads
 no_of_sms = args.sms
 fails, success = 0, 0
-not args.verbose and not args.verify and print(SKP 
+print(" SKP")
+not args.verbose and not args.verify and print(
     f'Target: {target} | Threads: {no_of_threads} | SMS-Bombs: {no_of_sms}')
 
 # proxy setup
@@ -69,7 +70,7 @@ def bomber(p):
             fails += 1
             args.verbose or args.verify and print(
                 '{:12}: error'.format(p.config['name']))
-    not args.verbose and not args.verify and print(SKP
+    not args.verbose and not args.verify and print(
         f'Bombing : {success+fails}/{no_of_sms} | Success: {success} | Failed: {fails}', end='\r')
 
 
