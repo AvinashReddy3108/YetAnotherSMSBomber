@@ -1,16 +1,17 @@
 import requests
-import json 
+import json
 import random
+
 
 class Provider:
 
-   def __init__(self, target, proxy={}, verbose=false, cc='91'):
-       try:
-           self.config = random.choice(
-                json.load(open('config.json', 'r'))['Providers'][cc])
+    def __init__(self, target, proxy={}, verbose=False, cc='91'):
+        try:
+            self.config = random.choice(
+                json.load(open('config.json', 'r'))['providers'][cc])
         except:
             self.config = random.choice(
-                 json.load(open('config.json', 'r'))['Providers']['multi'])
+                json.load(open('config.json', 'r'))['providers']['multi'])
         self.target = target
         self.headers = self._headers()
         self.done = False
