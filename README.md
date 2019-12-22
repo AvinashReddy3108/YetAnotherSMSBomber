@@ -1,10 +1,4 @@
-# bomb3r 💣
-
-Made with ❤ in IN.
-
-## For Windows 10/8.x/7
-
-> Use windows [releases](https://github.com/skp121/Sms-Bomber/releases) (windows release is not up-to date)
+# Sms-Bomber 💣
 
 ## Installation
 
