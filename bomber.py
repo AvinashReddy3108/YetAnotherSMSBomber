@@ -12,7 +12,7 @@ from Provider import Provider
 parser = argparse.ArgumentParser()
 parser.add_argument('target', metavar='TARGET', type=lambda value: (_ for _ in ()).throw(argparse.ArgumentTypeError(f'{value} is an invalid mobile number')) if len(value) != 10 else value,
                     help='Target mobile number without country code')
-parser.add_argument('--sms', '-S', type=int
+parser.add_argument('--sms', '-S', type=int,
                     help='Number of sms to target (default: 50000)', default=50000)
 parser.add_argument('--country', '-c', type=int,
                     help='Country code without (+) sign (default: 91)', default=91)
