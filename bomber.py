@@ -13,9 +13,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('target', metavar='TARGET', type=lambda value: (_ for _ in ()).throw(argparse.ArgumentTypeError(f'{value} is an invalid mobile number')) if len(value) != 10 else value,
                     help='Target mobile number without country code')
 parser.add_argument('--sms', '-S', type=int,
-                    help='Number of sms to target (default: 5000)', default=5000)
+                    help='Number of sms to target (default: 50000000000)', default=50000000000)
 parser.add_argument('--country', '-c', type=int,
-                    help='Country code without (+) sign (default: 91)', default=91)
+                    help='Country code without (+) sign (default: "")', default="")
 parser.add_argument('--threads', '-T', type=int,
                     help='Max number of concurrent HTTP(s) requests (default: 25)', default=25)
 parser.add_argument('--proxy', '-p', action='store_true',
@@ -31,7 +31,7 @@ target = str(args.target)
 no_of_threads = args.threads
 no_of_sms = args.sms
 fails, success = 0, 0
-print(" SKP ")
+print(" SKP HACKER ")
 not args.verbose and not args.verify and print(
     f'Target: {target} | Threads: {no_of_threads} | SMS-Bombs: {no_of_sms}')
 
