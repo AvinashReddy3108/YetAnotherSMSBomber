@@ -1,28 +1,30 @@
-# Yet another SMS Blaster 💣
+![Explosion!!](https://imgur.com/download/FPZPLK9)
 
-## Installation
+## Features
+- Lots of integrated SMS APIs.
+- Unlimited number of SMSs.
+- Faster than most SMS Bomber apps.
+- International bombing available.
+
+## Requirements
+- Anything which can run Windows, macOS or Linux and has a keyboard on it.
+- Python 3 and PIP installed on it.
+
+## Installation and Setup
 It's as easy as typing the below commands into your terminal.
-
 ```bash
 # Clone my repo
-git clone https://github.com/AvinashReddy3108/YetAnotherSMSBlaster.git
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
 
 # Move into the work directory.
-cd YetAnotherSMSBlaster
+cd YetAnotherSMSBomber
 
 # Install the requirements via PIP.
 pip3 install -r requirements.txt
 ```
 
-## Usage
-
-```bash
-python3 bomber.py <TARGET>
-```
-
-where TARGET is target mobile number.
-
 ## Options
+You can also read this via `python3 bomber.py -h` or `python3 bomber.py --help`
 
 ```
 usage: bomber.py [-h] [--sms SMS] [--threads THREADS] TARGET
@@ -43,6 +45,23 @@ optional arguments:
   --verify, -V          To verify all providers are working or not
 ```
 
-## License
+## Examples
+```bash
+# The Classic - 25 threads, 50k SMSs, Country Code: +91
+python3 bomber.py <TARGET>
 
-This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBlaster/blob/master/LICENSE)
+# Classic + Proxy
+python3 bomber.py --proxy <TARGET>
+python3 bomber.py -p <TARGET>
+
+# Here's how you use all possible parameters to your taste.
+python3 bomber.py --proxy --sms 500 --country 91 <TARGET>
+python3 bomber.py -p -S 500 -c 91 -T 30 <TARGET>
+```
+
+## Credits and Thanks
+- Huge kudos to [skp121](https://github.com/skp121) for the original source code. Find it [here](https://github.com/skp121/Sms-Bomber).
+- [SpeedX](https://github.com/TheSpeedX)'s [TBomb](https://github.com/TheSpeedX/TBomb) for some API's used here.
+
+## License
+This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
