@@ -4,7 +4,6 @@ import random
 
 
 class Provider:
-
     def __init__(self, target, proxy={}, verbose=False, cc='91'):
         try:
             self.config = random.choice(
@@ -21,11 +20,14 @@ class Provider:
 
     def _headers(self):
         tmp_headers = {
-            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0"}
+            "User-Agent":
+            "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0"
+        }
         if 'headers' in self.config:
             for key, value in self.config['headers'].items():
                 tmp_headers[key] = value
-        if 'data_type' in self.config and self.config['data_type'].lower() == "json":
+        if 'data_type' in self.config and self.config['data_type'].lower(
+        ) == "json":
             tmp_headers['Content-Type'] = 'application/json'
             self.data_type = 'json'
         else:
@@ -44,13 +46,24 @@ class Provider:
         url = self.config['url'] + self.target
         if 'cc_target' in self.config:
             url += '&' + self.config['cc_target'] + '=' + self.cc
-        return requests.get(url, headers=self.headers, timeout=10, proxies=self.proxy)
+        return requests.get(url,
+                            headers=self.headers,
+                            timeout=10,
+                            proxies=self.proxy)
 
     def _post(self):
         if self.data_type == "json":
-            return requests.post(self.config['url'], json=self.data, headers=self.headers, timeout=10, proxies=self.proxy)
+            return requests.post(self.config['url'],
+                                 json=self.data,
+                                 headers=self.headers,
+                                 timeout=10,
+                                 proxies=self.proxy)
         elif self.data_type == "urlencoded":
-            return requests.post(self.config['url'], data=self.data, headers=self.headers, timeout=10, proxies=self.proxy)
+            return requests.post(self.config['url'],
+                                 data=self.data,
+                                 headers=self.headers,
+                                 timeout=10,
+                                 proxies=self.proxy)
 
     def start(self):
         if self.config['method'] == 'GET':
@@ -62,8 +75,8 @@ class Provider:
 
     def status(self):
         if self.config['identifier'] in self.resp.text:
-            self.verbose and print(
-                '{:12}: success'.format(self.config['name']))
+            self.verbose and print('{:12}: success'.format(
+                self.config['name']))
             return True
         else:
             self.verbose and print('{:12}: failed'.format(self.config['name']))
