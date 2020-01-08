@@ -1,12 +1,16 @@
-# Yet another SMS Bomber 💣
+# Yet another SMS Blaster 💣
 
 ## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/installing/) to install Sms-Bomber.
+It's as easy as typing the below commands into your terminal.
 
 ```bash
-git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
-cd YetAnotherSMSBomber
+# Clone my repo
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBlaster.git
+
+# Move into the work directory.
+cd YetAnotherSMSBlaster
+
+# Install the requirements via PIP.
 pip3 install -r requirements.txt
 ```
 
@@ -41,7 +45,4 @@ optional arguments:
 
 ## License
 
-This project is licensed under the [GNU General Public License v3.0](https://github.com/skp121/Sms-Bomber/blob/master/LICENSE)
-<!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExNjcxMjcyNjksMTQzNTE1MjY5OV19
--->
+This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBlaster/blob/master/LICENSE)
