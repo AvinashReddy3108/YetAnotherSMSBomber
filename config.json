@@ -274,6 +274,34 @@
         "identifier": "emailMask"
       },
       {
+        "name": "goomo",
+        "method": "POST",
+        "cc_target": "country_code",
+        "url": "https://auth.goomo.com/v2/phone_confirmation/verify_user",
+        "target_param": "phone_number",
+        "data": {
+          "email": "fakeemail@gmail.com",
+          "phone_number": "",
+          "country_code": ""
+        },
+        "headers": {
+          "Host": "auth.goomo.com",
+          "Origin": "https://www.goomo.com",
+          "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0",
+          "Client": "desktop",
+          "X-Goomo-Platform": "Desktop",
+          "Content-Type": "application/json",
+          "Accept": "*/*",
+          "Content-Length": 49,
+          "Connection": "keep-alive",
+          "TE": "Trailers",
+          "Referer": "https://www.goomo.com/",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Accept-Language": "en-US,en;q=0.9"
+        },
+        "identifier": "SUCCESS"
+      },
+      {
         "name": "redbus2",
         "method": "GET",
         "cc_target": "phoneCode",
