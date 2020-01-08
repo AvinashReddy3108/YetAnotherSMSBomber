@@ -5,8 +5,8 @@
 Use the package manager [pip](https://pip.pypa.io/en/stable/installing/) to install Sms-Bomber.
 
 ```bash
-git clone https://github.com/skp121/Sms-Bomber.git
-cd Sms-Bomber
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
+cd YetAnotherSMSBomber
 pip3 install -r requirements.txt
 ```
 
@@ -43,5 +43,5 @@ optional arguments:
 
 This project is licensed under the [GNU General Public License v3.0](https://github.com/skp121/Sms-Bomber/blob/master/LICENSE)
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTQzNTE1MjY5OV19
+eyJoaXN0b3J5IjpbLTExNjcxMjcyNjksMTQzNTE1MjY5OV19
 -->
