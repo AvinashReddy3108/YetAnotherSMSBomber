@@ -10,6 +10,12 @@
         "identifier": "false"
       },
       {
+        "name": "shahxhtml",
+        "method": "GET",
+        "url": "http://shahxhtml.somee.com/bomber/pokkt.php?l=5&no=",
+        "identifier": "Bombed."
+      },
+      {
         "name": "justdial",
         "method": "GET",
         "url": "https://t.justdial.com/api/india_api_write/18july2018/sendvcode.php?mobile=",
