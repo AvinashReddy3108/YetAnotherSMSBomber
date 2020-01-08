@@ -8,23 +8,26 @@
 
 ## Requirements
 - Anything which can run Windows, macOS or Linux and has a keyboard on it.
-- Python 3 and PIP installed on it.
+- Python 3 and PIP installed on it.# Yet another SMS Blaster 💣
 
 ## Installation and Setup
 It's as easy as typing the below commands into your terminal.
+
 ```bash
 # Clone my repo
-git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBer.git
 
 # Move into the work directory.
-cd YetAnotherSMSBomber
+cd YetAnotherSMSBomblaster
 
-# Install the requirements via PIP.
-pip3 install -r requirements.txt
-```
+# Install the requirementser
+ nstall -r ruirements.
+ s
+ead this via `python3 bomber.py -h` or `python3 bomber.py --help`Usage
 
-## Options
-You can also read this via `python3 bomber.py -h` or `python3 bomber.py --help`
+```ba r reiremen.
+
+## 
 
 ```
 usage: bomber.py [-h] [--sms SMS] [--threads THREADS] TARGET
@@ -60,8 +63,11 @@ python3 bomber.py -p -S 500 -c 91 -T 30 <TARGET>
 ```
 
 ## Credits and Thanks
-- Huge kudos to [skp121](https://github.com/skp121) for the original source code. Find it [here](https://github.com/skp121/Sms-Bomber).
+- Huge kudos to [skp121](https://github.com/skp121) for the original source code. Find it [here](https://github.com/s1/SBer).
 - [SpeedX](https://github.com/TheSpeedX)'s [TBomb](https://github.com/TheSpeedX/TBomb) for some API's used here.
 
 ## License
-This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
+This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomblaster/blob/master/LICENSE)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTIxMDgwNzUyMjBdfQ==
+-->
