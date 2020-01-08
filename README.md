@@ -1,4 +1,4 @@
-# Sms-Bomber 💣
+# Yet another SMS Bomber 💣
 
 ## Installation
 
@@ -42,3 +42,6 @@ optional arguments:
 ## License
 
 This project is licensed under the [GNU General Public License v3.0](https://github.com/skp121/Sms-Bomber/blob/master/LICENSE)
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbMTQzNTE1MjY5OV19
+-->
