@@ -63,7 +63,7 @@ python3 bomber.py -p -S 500 -c 91 -T 30 <TARGET>
 ```
 
 ## Credits and Thanks
-- Huge kudos to [skp121](https://github.com/skp121) for the original source code. Find it [here](https://github.com/s1/SBer).
+- Huge kudos to [skp121](https://github.com/skp121) for the original source code. Find it [here](https://github.com/skp121/Sms-Bomber).
 - [SpeedX](https://github.com/TheSpeedX)'s [TBomb](https://github.com/TheSpeedX/TBomb) for some API's used here.
 
 ## License
