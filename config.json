@@ -202,6 +202,7 @@
                 "method":"POST",
                 "url":"https://auth.goomo.com/v2/phone_confirmation/verify_user",
                 "target_param":"phone_number",
+                "data_type":"json",
                 "data":{
                     "email":"fakeemail@gmail.com",
                     "phone_number":"",
@@ -213,9 +214,8 @@
                     "User-Agent":"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:71.0) Gecko/20100101 Firefox/71.0",
                     "Client":"desktop",
                     "X-Goomo-Platform":"Desktop",
-                    "Content-Type":"application/json",
                     "Accept":"*/*",
-                    "Content-Length":49,
+                    "Content-Length":"",
                     "Connection":"keep-alive",
                     "TE":"Trailers",
                     "Referer":"https://www.goomo.com/",
@@ -299,6 +299,30 @@
                     "Content-Type":"application/x-www-form-urlencoded"
                 },
                 "identifier":"emailMask"
+            },
+            {
+                "name":"altbalaji",
+                "method":"POST",
+                "cc_target":"country_code",
+                "url":"https://api.cloud.altbalaji.com/accounts/mobile/verify?domain=ID",
+                "target_param":"phone_number",
+                "data":{
+                    "country_code":"",
+                    "phone_number":""
+                },
+                "headers":{
+                    "Connection":"keep-alive",
+                    "Content-Length":"",
+                    "Accept":"application/json, text/plain, */*",
+                    "Origin":"https://lite.altbalaji.com",
+                    "Save-Data":"on",
+                    "User-Agent":"Mozilla/5.0 (Linux; Android 8.1.0; vivo 1718) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.89 Mobile Safari/537.36",
+                    "Content-Type":"application/json;charset=UTF-8",
+                    "Referer":"https://lite.altbalaji.com/subscribe?progress=input",
+                    "Accept-Encoding":"gzip, deflate, br",
+                    "Accept-Language":"en-IN,en;q=0.9,en-GB;q=0.8,en-US;q=0.7,hi;q=0.6"
+                },
+                "identifier":"ok"
             },
             {
                 "name":"redbus2",
