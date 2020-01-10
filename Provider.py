@@ -24,6 +24,8 @@ class Provider:
             "Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0"
         }
         if 'headers' in self.config:
+            if "Content-Length" in self.config['headers'].keys():
+                self.config['headers']['Content-Length'] = len(self._data())
             for key, value in self.config['headers'].items():
                 tmp_headers[key] = value
         if 'data_type' in self.config and self.config['data_type'].lower(
