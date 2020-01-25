@@ -22,6 +22,17 @@
                 "identifier":"sent"
             },
             {
+                "name":"wynkmusic",
+                "method":"POST",
+                "url":"https://sapi.wynk.com/music/v2/account/otp",
+                "target_param": "msisdn",
+                "data_type":"json",
+                "data":{
+                    "msisdn": "+"
+                },
+                "identifier":"msisdn"
+            },
+            {
                 "name":"oyorooms",
                 "method":"GET",
                 "url":"https://www.oyorooms.com/api/pwa/generateotp?country_code=91&nod=4&phone=",
