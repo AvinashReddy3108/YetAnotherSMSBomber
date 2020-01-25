@@ -25,12 +25,24 @@
                 "name":"wynkmusic",
                 "method":"POST",
                 "url":"https://sapi.wynk.com/music/v2/account/otp",
-                "target_param": "msisdn",
+                "target_param":"msisdn",
                 "data_type":"json",
                 "data":{
-                    "msisdn": "+"
+                    "msisdn":""
                 },
                 "identifier":"msisdn"
+            },
+            {
+                "name":"snapdeal",
+                "method":"POST",
+                "url":"https://www.snapdeal.com/sendOTP",
+                "target_param":"mobileNumber",
+                "data":{
+                    "emailId":"",
+                    "mobileNumber":"",
+                    "purpose":"LOGIN_WITH_MOBILE_OTP"
+                },
+                "identifier":"success"
             },
             {
                 "name":"oyorooms",
