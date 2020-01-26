@@ -330,6 +330,23 @@
                 "identifier":"emailMask"
             },
             {
+                "name":"flipkart2",
+                "method":"POST",
+                "cc_target":"loginId",
+                "url":"https://www.flipkart.com/api/6/user/signup/status",
+                "target_param":"loginId",
+                "data_type":"json",
+                "data":{
+                    "loginId":"+",
+                    "supportAllStates": true
+                },
+                "headers":{
+                    "X-user-agent":"Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0 FKUA/website/41/website/Desktop",
+                    "Origin":"https://www.flipkart.com"
+                },
+                "identifier":"email"
+            },
+            {
                 "name":"altbalaji",
                 "method":"POST",
                 "cc_target":"country_code",
