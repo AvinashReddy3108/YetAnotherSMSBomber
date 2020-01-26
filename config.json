@@ -51,6 +51,12 @@
                 "identifier":"correct"
             },
             {
+                "name":"oyorooms2",
+                "method":"GET",
+                "url":"https://api.oyorooms.com/api/v2/users/initiate_login?nod=4&intent=login&sms_auto_retrieval=true&android_version=22&country_code=+91&phone_number=",
+                "identifier":"correct"
+            },
+            {
                 "name":"frotels",
                 "method":"POST",
                 "url":"https://www.frotels.com/appsendsms.php",
