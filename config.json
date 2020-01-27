@@ -27,6 +27,10 @@
                 "url":"https://sapi.wynk.com/music/v2/account/otp",
                 "target_param":"msisdn",
                 "data_type":"json",
+                "headers":{
+                    "Referer":"https://wynk.in/music",
+                    "origin":"https://wynk.in"
+                },
                 "data":{
                     "msisdn":""
                 },
@@ -37,6 +41,10 @@
                 "method":"POST",
                 "url":"https://www.snapdeal.com/sendOTP",
                 "target_param":"mobileNumber",
+                "headers":{
+                    "referer":"https://www.snapdeal.com/iframeLogin",
+                    "x-requested-with":"XMLHttpREquest"
+                },
                 "data":{
                     "emailId":"",
                     "mobileNumber":"",
@@ -54,6 +62,12 @@
                 "name":"oyorooms2",
                 "method":"GET",
                 "url":"https://api.oyorooms.com/api/v2/users/initiate_login?nod=4&intent=login&sms_auto_retrieval=true&android_version=22&country_code=+91&phone_number=",
+                "headers":{
+                    "access_token":"QmpDZlRxZWo2UkZ5M3pSeHZ5NW46bi13NHN0ZTV5V1I1aGpCUVVHOUM=",
+                    "SEGMENT_CONFIG":"default",
+                    "Authorization":"Basic QmpDZlRxZWo2UkZ5M3pSeHZ5NW46bi13NHN0ZTV5V1I1aGpCUVVHOUM=",
+                    "User-Agent":"Dalvik/2.1.0 (Linux; U; Android 5.1.1; G011A Build/LMY48Z)"
+                },
                 "identifier":"correct"
             },
             {
@@ -130,6 +144,22 @@
                     "mobileNumber":""
                 },
                 "identifier":"true"
+            },
+            {
+                "name":"frapp",
+                "method":"POST",
+                "url":"https://vortex.frapp.in/mobileotp",
+                "target_param":"mobile",
+                "data_type":"json",
+                "headers":{
+                    "platform":"android",
+                    "version":"519",
+                    "User-Agent":"okhttp/3.11.0"
+                },
+                "data":{
+                    "mobile":""
+                },
+                "identifier":"mobile"
             },
             {
                 "name":"ajio",
