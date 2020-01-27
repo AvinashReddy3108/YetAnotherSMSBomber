@@ -24,7 +24,7 @@
             {
                 "name":"wynkmusic",
                 "method":"POST",
-                "url":"https://sapi.wynk.com/music/v2/account/otp",
+                "url":"https://sapi.wynk.in/music/v2/account/otp",
                 "target_param":"msisdn",
                 "data_type":"json",
                 "headers":{
