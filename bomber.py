@@ -8,7 +8,6 @@ import time
 from Provider import Provider
 
 # args
-
 parser = argparse.ArgumentParser()
 parser.add_argument(
     'target',
@@ -54,12 +53,12 @@ no_of_sms = args.sms
 fails, success = 0, 0
 
 print(r"""
- __ __       _      _____            _    _              
-|  |  | ___ | |_   |  _  | ___  ___ | |_ | |_  ___  ___  
-|_   _|| -_||  _|  |     ||   || . ||  _||   || -_||  _| 
-  |_|  |___||_|    |__|__||_|_||___||_|  |_|_||___||_|   
- _____  _____  _____    _____              _             
-|   __||     ||   __|  | __  | ___  _____ | |_  ___  ___ 
+ __ __       _      _____            _    _
+|  |  | ___ | |_   |  _  | ___  ___ | |_ | |_  ___  ___
+|_   _|| -_||  _|  |     ||   || . ||  _||   || -_||  _|
+  |_|  |___||_|    |__|__||_|_||___||_|  |_|_||___||_|
+ _____  _____  _____    _____              _
+|   __||     ||   __|  | __  | ___  _____ | |_  ___  ___
 |__   || | | ||__   |  | __ -|| . ||     || . || -_||  _|
 |_____||_|_|_||_____|  |_____||___||_|_|_||___||___||_|
 """)
@@ -67,10 +66,9 @@ print(r"""
 not args.verbose and not args.verify and print(
     f'Target: {target} | Threads: {no_of_threads} | SMS-Bombs: {no_of_sms}')
 
+
 # proxy setup
 # https://gimmeproxy.com/api/getProxy?curl=true&protocol=http&supportsHttps=true
-
-
 def get_proxy():
     args.verbose and print('Fetching proxies from server.....')
     curl = requests.get(
@@ -85,9 +83,8 @@ def get_proxy():
 
 proxies = get_proxy() if args.proxy else False
 
+
 # bomber function
-
-
 def bomber(p):
     global fails, success, no_of_sms
     if p is None or success > no_of_sms:
