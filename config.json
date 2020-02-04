@@ -193,6 +193,20 @@
                 "identifier":"sent"
             },
             {
+                "name":"unacademy2",
+                "method":"POST",
+                "url":"https://unacademy.com/api/v2/user/user_check/",
+                "target_param":"phone",
+                "data_type":"json",
+                "data":{
+                    "phone":"",
+                    "country_code":"in",
+                    "otp_type":1,
+                    "email":"memebot@gmail.com"
+                },
+                "identifier":"has_name"
+            },
+            {
                 "name":"treebo",
                 "method":"POST",
                 "url":"https://www.treebo.com/api/v2/auth/login/otp/",
