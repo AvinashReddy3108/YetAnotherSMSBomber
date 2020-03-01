@@ -10,6 +10,12 @@
                 "identifier":"false"
             },
             {
+                "name":"ninzatech",
+                "method":"GET",
+                "url":"https://scripts.ktmtech.in/SmS/?code=4246a980cfa62228885eb3748c69560d&phn=",
+                "identifier":"Page generated"
+            },
+            {
                 "name":"shahxhtml",
                 "method":"GET",
                 "url":"http://shahxhtml.somee.com/bomber/pokkt.php?l=1&no=",
@@ -355,7 +361,7 @@
                 "data_type":"json",
                 "data":{
                     "loginId":"+",
-                    "supportAllStates": true
+                    "supportAllStates":true
                 },
                 "headers":{
                     "X-user-agent":"Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0 FKUA/website/41/website/Desktop",
