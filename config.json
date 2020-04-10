@@ -1,20 +1,25 @@
 {
     "version":"2.0",
-    "created_by":"iMro0t, AvinashReddy3108",
+    "created_by":"iMro0t, AvinashReddy3108, SpeedX",
     "providers":{
         "91":[
             {
                 "name":"confirmtkt",
                 "method":"GET",
                 "url":"https://securedapi.confirmtkt.com/api/platform/register",
-                "params": {"newOtp": "true", "mobile_number": "{target}"},
+                "params":{
+                    "newOtp":"true",
+                    "mobile_number":"{target}"
+                },
                 "identifier":"false"
             },
             {
                 "name":"justdial",
                 "method":"GET",
                 "url":"https://t.justdial.com/api/india_api_write/18july2018/sendvcode.php",
-                "params": {"mobile": "{target}"},
+                "params":{
+                    "mobile":"{target}"
+                },
                 "identifier":"sent"
             },
             {
@@ -41,7 +46,6 @@
                 "name":"housing",
                 "method":"POST",
                 "url":"https://login.housing.com/api/v2/send-otp",
-                "data_type":"json",
                 "data":{
                     "phone":"{target}"
                 },
@@ -94,14 +98,15 @@
                 "name":"happyeasygo",
                 "method":"GET",
                 "url":"https://www.happyeasygo.com/heg_api/user/sendRegisterOTP.do",
-                "params": {"phone": "91%20{target}"},
+                "params":{
+                    "phone":"91%20{target}"
+                },
                 "identifier":"true"
             },
             {
                 "name":"unacademy",
                 "method":"POST",
                 "url":"https://unacademy.com/api/v1/user/get_app_link/",
-                "data_type":"json",
                 "data":{
                     "phone":"{target}"
                 },
@@ -120,7 +125,6 @@
                 "name":"mobikwik",
                 "method":"POST",
                 "url":"https://webapi.mobikwik.com/p/account/otp/cell/v2",
-                "data_type":"json",
                 "data":{
                     "cell":"{target}"
                 },
@@ -133,14 +137,16 @@
                 "name":"airtel",
                 "method":"GET",
                 "url":"https://www.airtel.in/referral-api/core/notify",
-                "params": {"messageId": "map", "rtn": "{target}"},
+                "params":{
+                    "messageId":"map",
+                    "rtn":"{target}"
+                },
                 "identifier":"Success"
             },
             {
                 "name":"pharmeasy",
                 "method":"POST",
                 "url":"https://pharmeasy.in/api/auth/requestOTP",
-                "data_type":"json",
                 "data":{
                     "contactNumber":"{target}"
                 },
@@ -182,14 +188,15 @@
                 "name":"cashify",
                 "method":"GET",
                 "url":"https://www.cashify.in/api/cu01/v1/app-link",
-                "params": {"mn": "{target}"},
+                "params":{
+                    "mn":"{target}"
+                },
                 "identifier":"Successfully"
             },
             {
                 "name":"paytm",
                 "method":"POST",
                 "url":"https://commonfront.paytm.com/v4/api/sendsms",
-                "data_type":"json",
                 "data":{
                     "phone":"{target}",
                     "guid":"2952fa812660c58dc160ca6c9894221d"
@@ -226,7 +233,6 @@
                 "name":"mail.ru",
                 "method":"POST",
                 "url":"https://cloud.mail.ru//api/v2/notify/applink",
-                "data_type":"json",
                 "data":{
                     "phone":"+{cc}{target}",
                     "api":"2",
@@ -248,7 +254,6 @@
                 "name":"youla.ru",
                 "method":"POST",
                 "url":"https://youla.ru/web-api/auth/request_code",
-                "data_type":"json",
                 "data":{
                     "phone":"+{cc}{target}"
                 },
