@@ -60,7 +60,7 @@ python3 bomber.py -p -S 500 -c 91 -T 30 <TARGET>
 ```
 
 ## Credits and Thanks
-- Huge kudos to [iMro0t](https://github.com/iMro0t) for the original source code. Find it [here](https://github.com/bomb3r/).
+- Huge kudos to [iMro0t](https://github.com/iMro0t) for the original source code. Find it [here](https://github.com/iMro0t/bomb3r/).
 - Thanks [botallen](https://github.com/botallen) for the recent fixes which have been merged from the original repo.
 - [SpeedX](https://github.com/TheSpeedX)'s [TBomb](https://github.com/TheSpeedX/TBomb) for some API's used here.
 
