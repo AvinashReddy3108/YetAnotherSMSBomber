@@ -1,20 +1,30 @@
 import requests
+import urllib3
 import json
 import random
 
+DEFAULT_TIMEOUT = 30
+VERIFY = True
+not VERIFY and urllib3.disable_warnings(
+    urllib3.exceptions.InsecureRequestWarning)
+
+with open('config.json', 'r') as f:
+    PROVIDERS = json.load(f)['providers']
+
 
 class Provider:
-    def __init__(self, target, proxy={}, verbose=False, cc='91'):
-        try:
-            self.config = random.choice(
-                json.load(open('config.json', 'r'))['providers'][cc])
-        except:
-            self.config = random.choice(
-                json.load(open('config.json', 'r'))['providers']['multi'])
+    def __init__(self, target, proxy={}, verbose=False, cc='91', config=None):
+        if config:
+            self.config = config
+        else:
+            self.config = random.choice(PROVIDERS[cc] +
+                                        PROVIDERS['multi'] if cc in
+                                        PROVIDERS else PROVIDERS['multi'])
         self.target = target
         self.headers = self._headers()
         self.done = False
         self.proxy = proxy
+        self.cookies = self._cookies()
         self.verbose = verbose
         self.cc = cc
 
@@ -24,49 +34,49 @@ class Provider:
             "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:72.0) Gecko/20100101 Firefox/72.0"
         }
         if 'headers' in self.config:
-            for key, value in self.config['headers'].items():
-                tmp_headers[key] = value
-        if 'data_type' in self.config and self.config['data_type'].lower(
-        ) == "json":
-            tmp_headers['Content-Type'] = 'application/json'
-            self.data_type = 'json'
-        else:
-            tmp_headers['Content-Type'] = 'application/x-www-form-urlencoded'
-            self.data_type = 'urlencoded'
+            tmp_headers.update(self.config['headers'])
         return tmp_headers
 
+    def _cookies(self):
+        tmp_cookies = {}
+        if 'cookies' in self.config:
+            tmp_cookies.update(self.config['cookies'])
+        return tmp_cookies
+
     def _data(self):
-        data = self.config['data']
-        if 'cc_target' in self.config:
-            data[self.config['cc_target']] += self.cc
-        data[self.config['target_param']] += self.target
-        return data
+        tmp_data = {}
+        for key, value in self.config['data'].items():
+            tmp_data[key] = value.format(cc=self.cc, target=self.target)
+        return tmp_data
+
+    def _params(self):
+        tmp_params = {}
+        if 'params' in self.config:
+            for key, value in self.config['params'].items():
+                tmp_params[key] = value.format(cc=self.cc, target=self.target)
+        return tmp_params
 
     def _get(self):
-        url = self.config['url'] + self.target
-        if 'cc_target' in self.config:
-            url += '&' + self.config['cc_target'] + '=' + self.cc
-        return requests.get(url,
+        return requests.get(self.config['url'],
+                            params=self.params,
                             headers=self.headers,
-                            timeout=10,
-                            proxies=self.proxy)
+                            cookies=self.cookies,
+                            timeout=DEFAULT_TIMEOUT,
+                            proxies=self.proxy,
+                            verify=VERIFY)
 
     def _post(self):
-        if self.data_type == "json":
-            return requests.post(self.config['url'],
-                                 json=self.data,
-                                 headers=self.headers,
-                                 timeout=10,
-                                 proxies=self.proxy)
-        elif self.data_type == "urlencoded":
-            return requests.post(self.config['url'],
-                                 data=self.data,
-                                 headers=self.headers,
-                                 timeout=10,
-                                 proxies=self.proxy)
+        return requests.post(self.config['url'],
+                             data=self.data,
+                             headers=self.headers,
+                             cookies=self.cookies,
+                             timeout=10,
+                             proxies=self.proxy,
+                             verify=VERIFY)
 
     def start(self):
         if self.config['method'] == 'GET':
+            self.params = self._params()
             self.resp = self._get()
         elif self.config['method'] == 'POST':
             self.data = self._data()

@@ -2,8 +2,8 @@
 
 ## Features
 - Lots of integrated SMS APIs.
-- Unlimited number of SMSs.
-- Faster than most SMS Bomber apps.
+- Unlimited number of SMSs (with proxy support for huge bombs!).
+- Faster and lighter than most SMS Bomber apps/scripts.
 - International bombing available.
 
 ## Requirements
@@ -47,7 +47,7 @@ optional arguments:
 
 ## Examples
 ```bash
-# The Classic - 25 threads, 50k SMSs, Country Code: +91
+# The Classic - 25 threads, 50 SMSs, Country Code: +91
 python3 bomber.py <TARGET>
 
 # Classic + Proxy
@@ -60,7 +60,8 @@ python3 bomber.py -p -S 500 -c 91 -T 30 <TARGET>
 ```
 
 ## Credits and Thanks
-- Huge kudos to [skp121](https://github.com/skp121) for the original source code. Find it [here](https://github.com/skp121/Sms-Bomber).
+- Huge kudos to [iMro0t](https://github.com/iMro0t) for the original source code. Find it [here](https://github.com/bomb3r/).
+- Thanks [botallen](https://github.com/botallen) for the recent fixes which have been merged from the original repo.
 - [SpeedX](https://github.com/TheSpeedX)'s [TBomb](https://github.com/TheSpeedX/TBomb) for some API's used here.
 
 ## License
