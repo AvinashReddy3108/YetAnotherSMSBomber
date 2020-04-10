@@ -88,7 +88,7 @@ proxies = get_proxy() if args.proxy else None
 
 # bomber function
 def bomber(p):
-    global tried, failed, success, no_of_sms
+    global failed, success, no_of_sms
     if not args.verify and p is None or success > no_of_sms:
         return
     elif not p.done:
