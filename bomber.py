@@ -19,8 +19,8 @@ parser.add_argument(
 parser.add_argument('--sms',
                     '-S',
                     type=int,
-                    help='Number of sms to target (default: 30)',
-                    default=30)
+                    help='Number of sms to target (default: 4000)',
+                    default=4000)
 parser.add_argument('--country',
                     '-c',
                     type=int,
@@ -30,8 +30,8 @@ parser.add_argument(
     '--threads',
     '-T',
     type=int,
-    help='Max number of concurrent HTTP(s) requests (default: 15)',
-    default=15)
+    help='Max number of concurrent HTTP(s) requests (default: 4000)',
+    default=4000)
 parser.add_argument(
     '--proxy',
     '-p',
