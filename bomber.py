@@ -164,7 +164,8 @@ if args.verify:
                 APIRequestsHandler(
                     target,
                     proxy=proxies,
-                    verbose=True,
+                    verbose=args.verbose,
+                    verify=True,
                     timeout=args.timeout,
                     cc=country_code,
                     config=config,

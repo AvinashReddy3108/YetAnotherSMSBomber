@@ -308,7 +308,16 @@ class CustomArgumentParser(argparse.ArgumentParser):
 
 
 class APIRequestsHandler:
-    def __init__(self, target, timeout, proxy={}, verbose=False, cc="91", config=None):
+    def __init__(
+        self,
+        target,
+        timeout,
+        proxy={},
+        verbose=False,
+        verify=False,
+        cc="91",
+        config=None,
+    ):
         self.config = config
         self.target = target
         self.headers = self._headers()
@@ -316,6 +325,7 @@ class APIRequestsHandler:
         self.proxy = proxy
         self.cookies = self._cookies()
         self.verbose = verbose
+        self.verify = verify
         self.timeout = timeout
         self.cc = cc
 
@@ -377,13 +387,21 @@ class APIRequestsHandler:
                 self.data = self._data()
                 self.resp = self._post()
             self.done = True
-        except:
-            self.verbose and print("{:<13}: ERROR".format(p.config["name"]))
+        except Exception as error:
+            (self.verbose or self.verify) and print(
+                "{:<13}: ERROR".format(p.config["name"])
+            )
+            self.verbose and print("Error text: {}".format(error))
 
     def status(self):
         if self.config["identifier"] in self.resp.text:
-            self.verbose and print("{:<13}: OK".format(self.config["name"]))
+            (self.verbose or self.verify) and print(
+                "{:<13}: OK".format(self.config["name"])
+            )
             return True
         else:
-            self.verbose and print("{:<13}: FAIL".format(self.config["name"]))
+            (self.verbose or self.verify) and print(
+                "{:<13}: FAIL".format(self.config["name"])
+            )
+            self.verbose and print("Response: {}".format(self.resp.text))
             return False
