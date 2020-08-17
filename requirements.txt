@@ -1,1 +1,2 @@
 requests
+httpx[http2]

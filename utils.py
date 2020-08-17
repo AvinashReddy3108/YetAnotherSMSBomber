@@ -15,10 +15,8 @@
 # along with YetAnotherSMSBomber.  If not, see <https://www.gnu.org/licenses/>.
 
 import argparse
-import json
 import os
-import random
-import requests
+import httpx
 import sys
 import textwrap
 import urllib3
@@ -118,7 +116,6 @@ class CustomArgumentParser(argparse.ArgumentParser):
                 else "%s" % positional["name"]
             ]
         right = str.join(" ", arglist)
-        rlen = len(right)
 
         # Determine width for left and right parts based on string lengths, define
         # output template. Limit width of left part to a maximum of self.width / 2.
@@ -328,6 +325,7 @@ class APIRequestsHandler:
         self.verify = verify
         self.timeout = timeout
         self.cc = cc
+        self.client = httpx.Client(http2=True, proxies=self.proxy, verify=VERIFY)
 
     def _headers(self):
         tmp_headers = {
@@ -357,26 +355,28 @@ class APIRequestsHandler:
         return tmp_params
 
     def _get(self):
-        return requests.get(
-            self.config["url"],
-            params=self.params,
-            headers=self.headers,
-            cookies=self.cookies,
-            timeout=self.timeout,
-            proxies=self.proxy,
-            verify=VERIFY,
-        )
+        try:
+            return self.client.get(
+                self.config["url"],
+                params=self.params,
+                headers=self.headers,
+                cookies=self.cookies,
+                timeout=self.timeout
+            )
+        except:
+            raise
 
     def _post(self):
-        return requests.post(
-            self.config["url"],
-            data=self.data,
-            headers=self.headers,
-            cookies=self.cookies,
-            timeout=self.timeout,
-            proxies=self.proxy,
-            verify=VERIFY,
-        )
+        try:
+            return self.client.post(
+                self.config["url"],
+                data=self.data,
+                headers=self.headers,
+                cookies=self.cookies,
+                timeout=self.timeout
+            )
+        except:
+            raise
 
     def start(self):
         try:
@@ -389,7 +389,7 @@ class APIRequestsHandler:
             self.done = True
         except Exception as error:
             (self.verbose or self.verify) and print(
-                "{:<13}: ERROR".format(p.config["name"])
+                "{:<13}: ERROR".format(self.config["name"])
             )
             self.verbose and print("Error text: {}".format(error))
 
