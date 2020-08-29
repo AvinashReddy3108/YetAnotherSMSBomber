@@ -153,7 +153,7 @@ def bomber(p):
 
 # threadsssss
 start = time.time()
-providers = json.load(open(config, "r"))["providers"]
+providers = json.load(open(config, "r", encoding='UTF-8'))["providers"]
 if args.verify:
     pall = [p for x in providers.values() for p in x]
     print(f"Processing {len(pall)} providers, please wait!\n")
