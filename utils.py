@@ -96,19 +96,15 @@ class CustomArgumentParser(argparse.ArgumentParser):
             flags = str.join("/", option["flags"])
             arglist += [
                 "[%s]" % flags
-                if (
-                    "action" in option
-                    and (
-                        option["action"] == "store_true"
-                        or option["action"] == "store_false"
-                    )
-                )
+                if "action" in option
+                and option["action"] in ["store_true", "store_false"]
                 else "[%s %s]" % (flags, option["metavar"])
                 if ("metavar" in option)
                 else "[%s %s]" % (flags, option["dest"].upper())
                 if ("dest" in option)
                 else "[%s]" % flags
             ]
+
         for positional in self.positionals:
             arglist += [
                 "%s" % positional["metavar"]
@@ -138,7 +134,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
         right = wrapper.wrap(right)
 
         # Add usage message to output
-        for i in range(0, max(len(left), len(right))):
+        for i in range(max(len(left), len(right))):
             left_ = left[i] if (i < len(left)) else ""
             right_ = right[i] if (i < len(right)) else ""
             output.append(outtmp % (left_, right_))
@@ -173,9 +169,10 @@ class CustomArgumentParser(argparse.ArgumentParser):
                 else positional["name"]
             )
         for option in self.options:
-            if "action" in option and (
-                option["action"] == "store_true" or option["action"] == "store_false"
-            ):
+            if "action" in option and option["action"] in [
+                "store_true",
+                "store_false",
+            ]:
                 option["left"] = str.join(", ", option["flags"])
             else:
                 option["left"] = str.join(
@@ -248,9 +245,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             output.append("")
             output.append("Positional arguments:")
             for positional in self.positionals:
-                for i in range(
-                    0, max(len(positional["left"]), len(positional["right"]))
-                ):
+                for i in range(max(len(positional["left"]), len(positional["right"]))):
                     left = (
                         positional["left"][i] if (i < len(positional["left"])) else ""
                     )
@@ -264,7 +259,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             output.append("")
             output.append("Optional arguments:")
             for option in self.options:
-                for i in range(0, max(len(option["left"]), len(option["right"]))):
+                for i in range(max(len(option["left"]), len(option["right"]))):
                     left = option["left"][i] if (i < len(option["left"])) else ""
                     right = option["right"][i] if (i < len(option["right"])) else ""
                     output.append(outtmp % (left, right))
@@ -285,7 +280,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
     # Method redefined as format_usage() does not return a trailing newline like
     # the original does
     def print_usage(self, file=None):
-        if file == None:
+        if file is None:
             file = sys.stdout
         file.write(self.format_usage() + "\n")
         file.flush()
@@ -293,7 +288,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
     # Method redefined as format_help() does not return a trailing newline like
     # the original does
     def print_help(self, file=None):
-        if file == None:
+        if file is None:
             file = sys.stdout
         file.write(self.format_help() + "\n")
         file.flush()

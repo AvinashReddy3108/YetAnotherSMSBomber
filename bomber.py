@@ -173,7 +173,7 @@ if args.verify:
             )
 else:
     with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
-        for i in range(no_of_sms):
+        for _ in range(no_of_sms):
             p = APIRequestsHandler(
                 target,
                 proxy=proxies,
@@ -191,5 +191,5 @@ end = time.time()
 
 # finalize
 (args.verbose or args.verify) and print(f"\nSuccess: {success} | Failed: {failed}")
-not (args.verbose or args.verify) and print()
+not args.verbose and not args.verify and print()
 print(f"Took {end-start:.2f}s to complete")
