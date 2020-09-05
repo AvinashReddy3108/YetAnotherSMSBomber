@@ -68,7 +68,7 @@ parser.add_argument(
     "-T",
     type=int,
     help="Max number of concurrent HTTP(s) requests.",
-    default=15,
+    default=5000,
 )
 parser.add_argument(
     "--timeout",
