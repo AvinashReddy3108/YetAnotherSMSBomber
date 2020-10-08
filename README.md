@@ -61,7 +61,7 @@ python3 bomber.py -N 1000 -P <TARGET>
 
 # Custom API config file and proxy.
 python3 bomber.py --config-path "./config.json" --proxy <TARGET>
-python3 bomber.py -C "./config.json" -P <TARGET>
+python3 bomber.py -c "./config.json" -P <TARGET>
 
 # Here's how you use all possible parameters to your taste.
 python3 bomber.py --proxy --num 500 --country 91 --timeout 20 <TARGET>
