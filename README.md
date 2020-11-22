@@ -148,7 +148,7 @@ python3 bomber.py -p -N 500 -c 91 -T 30 -t 20 <TARGET>
 ## License
  This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
 
-## I dont have a device with Windows on it will do Windows Instructions once i get it :P
+
 
 
 
