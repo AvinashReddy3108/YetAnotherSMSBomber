@@ -1,7 +1,7 @@
-A fork of [YetAnotherSMSBomber](https://github.com/AvinashReddy3108/YetAnotherSMSBomber) with instructions for newbies
+A fork of [YetAnotherSMSBomber](https://github.com/AvinashReddy3108/YetAnotherSMSBomber) with instructions for newbies and a few changes
 
 
-
+ 
 
 ## Features
 - Lots of integrated SMS APIs, and support for custom API configuration!
