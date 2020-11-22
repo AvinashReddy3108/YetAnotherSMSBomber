@@ -1,5 +1,3 @@
-
-
 ## Features
 - Lots of integrated SMS APIs, and support for custom API configuration!
 - Unlimited number of SMSs (with proxy support for huge bombs!).
@@ -19,19 +17,75 @@ brew install git
 brew install python3
 sudo easy_install pip
 sudo pip install --upgrade pip
+
+# Clone this repo
+git clone https://github.com/akshay-49/SimpleSMSBomber.git
+
+# Move into working directory.
+cd SimpleSMSBomber
+
+# Install the requirements.
+pip3 install -r requirements.txt
 ```
 
+## Instructions for Android
 
-## Installation and Setup
-It's as easy as typing the below commands into your terminal.
+Download Termux from the [Play Store](https://play.google.com/store/apps/details?id=com.termux)
+
+Open Termux and enter the following commands:
+
 ```bash
-# Clone my repo
-git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
+# Install Dependencies:
+pkg install git -y 
+pkg install python -y 
 
-# Move into the work directory.
-cd YetAnotherSMSBomber
+# Clone this repo
+git clone https://github.com/akshay-49/SimpleSMSBomber.git
 
-# Install the requirements via PIP.
+# Move into working directory.
+cd SimpleSMSBomber
+
+# Install the requirements.
+pip3 install -r requirements.txt
+```
+
+## Instructions for iOS/iPadOS(due to the way Apple devices handle ram usage it's gonna be slow but it works :P)
+
+Download iSH from [here](https://testflight.apple.com/join/97i7KM8O0
+
+Open iSH and enter the following commands:
+
+```bash
+# Install Dependencies:
+apk add git
+apk add python3
+apk add py3-pip
+
+# Clone this repo
+git clone https://github.com/akshay-49/SimpleSMSBomber.git
+
+# Move into working directory.
+cd SimpleSMSBomber
+
+# Install the requirements.
+pip3 install -r requirements.txt
+```
+
+## Instructions for Debian-based GNU/Linux distributions:
+
+```bash
+# Install Dependencies:
+sudo apt install git
+sudo apt install python3
+sudo apt install python3-pip
+
+# Clone this repo
+git clone https://github.com/akshay-49/SimpleSMSBomber.git
+
+# Move into working directory.
+cd SimpleSMSBomber
+
+# Install the requirements.
 pip3 install -r requirements.txt
 ```
 
@@ -81,10 +135,9 @@ python3 bomber.py -p -N 500 -c 91 -T 30 -t 20 <TARGET>
 ```
 
 ## Credits and Thanks
-- Huge kudos to [iMro0t](https://github.com/iMro0t) for the original source code. Find it [here](https://github.com/iMro0t/bomb3r/).
-- Thanks [botallen](https://github.com/botallen) for the recent fixes which have been merged from the original repo.
-- [SpeedX](https://github.com/TheSpeedX)'s [TBomb](https://github.com/TheSpeedX/TBomb) for some API's used here.
-- [fonic](https://github.com/fonic) for his awesome formatter for `argparse`. Check it out in this [gist](https://gist.github.com/fonic/fe6cade2e1b9eaf3401cc732f48aeebd)!
 
-## License
-This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
+All credits go to [AvinashReddy3108](https://github.com/AvinashReddy3108) you can find his repo [here](https://github.com/AvinashReddy3108/YetAnotherSMSBomber)
+
+
+
+
