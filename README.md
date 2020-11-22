@@ -143,6 +143,8 @@ python3 bomber.py -p -N 500 -c 91 -T 30 -t 20 <TARGET>
 
 All credits go to [AvinashReddy3108](https://github.com/AvinashReddy3108) you can find his repo [here](https://github.com/AvinashReddy3108/YetAnotherSMSBomber)
 
+## I dont have a device with Windows on it will do Windows Instructions once i get it :P
+
 
 
 
