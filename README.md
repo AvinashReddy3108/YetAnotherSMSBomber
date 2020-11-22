@@ -140,8 +140,13 @@ python3 bomber.py -p -N 500 -c 91 -T 30 -t 20 <TARGET>
 ```
 
 ## Credits and Thanks
+- Huge kudos to [iMro0t](https://github.com/iMro0t) for the original source code. Find it [here](https://github.com/iMro0t/bomb3r/).
+- Thanks [botallen](https://github.com/botallen) for the recent fixes which have been merged from the original repo.
+- [SpeedX](https://github.com/TheSpeedX)'s [TBomb](https://github.com/TheSpeedX/TBomb) for some API's used here.
+- [fonic](https://github.com/fonic) for his awesome formatter for `argparse`. Check it out in this [gist](https://gist.github.com/fonic/fe6cade2e1b9eaf3401cc732f48aeebd)!
 
-All credits go to [AvinashReddy3108](https://github.com/AvinashReddy3108) you can find his repo [here](https://github.com/AvinashReddy3108/YetAnotherSMSBomber)
+## License
+ This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
 
 ## I dont have a device with Windows on it will do Windows Instructions once i get it :P
 
