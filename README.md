@@ -1,3 +1,8 @@
+A fork of [YetAnotherSMSBomber](https://github.com/AvinashReddy3108/YetAnotherSMSBomber) with instructions for newbies
+
+
+
+
 ## Features
 - Lots of integrated SMS APIs, and support for custom API configuration!
 - Unlimited number of SMSs (with proxy support for huge bombs!).
