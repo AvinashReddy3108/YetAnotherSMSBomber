@@ -1,4 +1,4 @@
-![Explosion!!](https://imgur.com/download/FPZPLK9)
+
 
 ## Features
 - Lots of integrated SMS APIs, and support for custom API configuration!
@@ -7,8 +7,20 @@
 - International bombing available.
 
 ## Requirements
-- Anything which can run Windows, macOS or Linux and has a keyboard on it.
-- Python 3 and PIP installed on it.
+- Anything which has an OS on it
+
+## Instructions for MacOS
+```bash
+# Install brew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# Install Dependencies
+brew install git
+brew install python3
+sudo easy_install pip
+sudo pip install --upgrade pip
+```
+
 
 ## Installation and Setup
 It's as easy as typing the below commands into your terminal.
