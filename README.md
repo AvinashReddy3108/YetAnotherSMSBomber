@@ -24,10 +24,10 @@ sudo easy_install pip
 sudo pip install --upgrade pip
 
 # Clone this repo
-git clone https://github.com/akshay-49/SimpleSMSBomber.git
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
 
 # Move into working directory.
-cd SimpleSMSBomber
+cd YetAnotherSMSBomber
 
 # Install the requirements.
 pip3 install -r requirements.txt
@@ -45,10 +45,10 @@ pkg install git -y
 pkg install python -y 
 
 # Clone this repo
-git clone https://github.com/akshay-49/SimpleSMSBomber.git
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
 
 # Move into working directory.
-cd SimpleSMSBomber
+cd YetAnotherSMSBomber
 
 # Install the requirements.
 pip3 install -r requirements.txt
@@ -67,10 +67,10 @@ apk add python3
 apk add py3-pip
 
 # Clone this repo
-git clone https://github.com/akshay-49/SimpleSMSBomber.git
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
 
 # Move into working directory.
-cd SimpleSMSBomber
+cd YetAnotherSMSBomber
 
 # Install the requirements.
 pip3 install -r requirements.txt
@@ -85,10 +85,10 @@ sudo apt install python3
 sudo apt install python3-pip
 
 # Clone this repo
-git clone https://github.com/akshay-49/SimpleSMSBomber.git
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
 
 # Move into working directory.
-cd SimpleSMSBomber
+cd YetAnotherSMSBomber
 
 # Install the requirements.
 pip3 install -r requirements.txt
