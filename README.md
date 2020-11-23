@@ -1,5 +1,8 @@
 ![Explosion!!](https://imgur.com/download/FPZPLK9)
 
+
+ 
+
 ## Features
 - Lots of integrated SMS APIs, and support for custom API configuration!
 - Unlimited number of SMSs (with proxy support for huge bombs!).
@@ -7,19 +10,87 @@
 - International bombing available.
 
 ## Requirements
-- Anything which can run Windows, macOS or Linux and has a keyboard on it.
-- Python 3 and PIP installed on it.
+- Anything which has an OS on it
 
-## Installation and Setup
-It's as easy as typing the below commands into your terminal.
+## Instructions for MacOS
 ```bash
-# Clone my repo
+# Install brew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+# Install Dependencies
+brew install git
+brew install python3
+sudo easy_install pip
+sudo pip install --upgrade pip
+
+# Clone this repo
 git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
 
-# Move into the work directory.
+# Move into working directory.
 cd YetAnotherSMSBomber
 
-# Install the requirements via PIP.
+# Install the requirements.
+pip3 install -r requirements.txt
+```
+
+## Instructions for Android
+
+Download Termux from the [Play Store](https://play.google.com/store/apps/details?id=com.termux)
+
+Open Termux and enter the following commands:
+
+```bash
+# Install Dependencies:
+pkg install git -y 
+pkg install python -y 
+
+# Clone this repo
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
+
+# Move into working directory.
+cd YetAnotherSMSBomber
+
+# Install the requirements.
+pip3 install -r requirements.txt
+```
+
+## Instructions for iOS/iPadOS(due to the way Apple devices handle ram usage it's gonna be slow but it works :P)
+
+Download iSH from [here](https://testflight.apple.com/join/97i7KM8O0
+
+Open iSH and enter the following commands:
+
+```bash
+# Install Dependencies:
+apk add git
+apk add python3
+apk add py3-pip
+
+# Clone this repo
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
+
+# Move into working directory.
+cd YetAnotherSMSBomber
+
+# Install the requirements.
+pip3 install -r requirements.txt
+```
+
+## Instructions for Debian-based GNU/Linux distributions:
+
+```bash
+# Install Dependencies:
+sudo apt install git
+sudo apt install python3
+sudo apt install python3-pip
+
+# Clone this repo
+git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
+
+# Move into working directory.
+cd YetAnotherSMSBomber
+
+# Install the requirements.
 pip3 install -r requirements.txt
 ```
 
@@ -75,4 +146,10 @@ python3 bomber.py -p -N 500 -c 91 -T 30 -t 20 <TARGET>
 - [fonic](https://github.com/fonic) for his awesome formatter for `argparse`. Check it out in this [gist](https://gist.github.com/fonic/fe6cade2e1b9eaf3401cc732f48aeebd)!
 
 ## License
-This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
+ This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
+
+
+
+
+
+
