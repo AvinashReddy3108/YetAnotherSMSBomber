@@ -56,7 +56,7 @@ pip3 install -r requirements.txt
 
 ## Instructions for iOS/iPadOS(due to the way Apple devices handle ram usage it's gonna be slow but it works :P)
 
-Download iSH from [here](https://testflight.apple.com/join/97i7KM8O0
+Download iSH from [here](https://testflight.apple.com/join/97i7KM8O0)
 
 Open iSH and enter the following commands:
 
