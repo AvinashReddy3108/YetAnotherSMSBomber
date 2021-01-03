@@ -1,8 +1,5 @@
 ![Explosion!!](https://imgur.com/download/FPZPLK9)
 
-
- 
-
 ## Features
 - Lots of integrated SMS APIs, and support for custom API configuration!
 - Unlimited number of SMSs (with proxy support for huge bombs!).
@@ -10,7 +7,9 @@
 - International bombing available.
 
 ## Requirements
-- Anything which has an OS on it
+- Python 3.6+ on MacOS, Android ([Termux](https://termux.com)), Linux, or iOS ([iSH](https://testflight.apple.com/join/97i7KM8O0))
+
+NOTE: Windows not supported as some of `httpx`'s `http2` libraries can't be installed on it.
 
 ## Instructions for MacOS
 ```bash
@@ -41,8 +40,7 @@ Open Termux and enter the following commands:
 
 ```bash
 # Install Dependencies:
-pkg install git -y 
-pkg install python -y 
+pkg install git python -y
 
 # Clone this repo
 git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
@@ -80,9 +78,7 @@ pip3 install -r requirements.txt
 
 ```bash
 # Install Dependencies:
-sudo apt install git
-sudo apt install python3
-sudo apt install python3-pip
+sudo apt install git python3 python3-pip
 
 # Clone this repo
 git clone https://github.com/AvinashReddy3108/YetAnotherSMSBomber.git
@@ -146,10 +142,4 @@ python3 bomber.py -p -N 500 -c 91 -T 30 -t 20 <TARGET>
 - [fonic](https://github.com/fonic) for his awesome formatter for `argparse`. Check it out in this [gist](https://gist.github.com/fonic/fe6cade2e1b9eaf3401cc732f48aeebd)!
 
 ## License
- This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)
-
-
-
-
-
-
+This project is licensed under the [GNU General Public License v3.0](https://github.com/AvinashReddy3108/YetAnotherSMSBomber/blob/master/LICENSE)

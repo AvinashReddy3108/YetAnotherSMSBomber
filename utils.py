@@ -28,6 +28,7 @@ not VERIFY and urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarnin
 # https://gist.github.com/fonic/fe6cade2e1b9eaf3401cc732f48aeebd
 # https://stackoverflow.com/a/61039719
 class CustomArgumentParser(argparse.ArgumentParser):
+
     # Postition of 'width' argument: https://www.python.org/dev/peps/pep-3102/
     def __init__(self, *args, width=80, **kwargs):
         # At least self.positionals + self.options need to be initialized before calling
@@ -88,7 +89,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
                 and sys.argv[0] != ""
                 and not str.isspace(sys.argv[0])
             )
-            else "main.py"
+            else "script.py"
         )
         llen = len(left1) + len(left2)
         arglist = []
@@ -96,15 +97,19 @@ class CustomArgumentParser(argparse.ArgumentParser):
             flags = str.join("/", option["flags"])
             arglist += [
                 "[%s]" % flags
-                if "action" in option
-                and option["action"] in ["store_true", "store_false"]
+                if (
+                    "action" in option
+                    and (
+                        option["action"] == "store_true"
+                        or option["action"] == "store_false"
+                    )
+                )
                 else "[%s %s]" % (flags, option["metavar"])
                 if ("metavar" in option)
                 else "[%s %s]" % (flags, option["dest"].upper())
                 if ("dest" in option)
                 else "[%s]" % flags
             ]
-
         for positional in self.positionals:
             arglist += [
                 "%s" % positional["metavar"]
@@ -134,7 +139,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
         right = wrapper.wrap(right)
 
         # Add usage message to output
-        for i in range(max(len(left), len(right))):
+        for i in range(0, max(len(left), len(right))):
             left_ = left[i] if (i < len(left)) else ""
             right_ = right[i] if (i < len(right)) else ""
             output.append(outtmp % (left_, right_))
@@ -169,10 +174,9 @@ class CustomArgumentParser(argparse.ArgumentParser):
                 else positional["name"]
             )
         for option in self.options:
-            if "action" in option and option["action"] in [
-                "store_true",
-                "store_false",
-            ]:
+            if "action" in option and (
+                option["action"] == "store_true" or option["action"] == "store_false"
+            ):
                 option["left"] = str.join(", ", option["flags"])
             else:
                 option["left"] = str.join(
@@ -245,7 +249,9 @@ class CustomArgumentParser(argparse.ArgumentParser):
             output.append("")
             output.append("Positional arguments:")
             for positional in self.positionals:
-                for i in range(max(len(positional["left"]), len(positional["right"]))):
+                for i in range(
+                    0, max(len(positional["left"]), len(positional["right"]))
+                ):
                     left = (
                         positional["left"][i] if (i < len(positional["left"])) else ""
                     )
@@ -259,7 +265,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             output.append("")
             output.append("Optional arguments:")
             for option in self.options:
-                for i in range(max(len(option["left"]), len(option["right"]))):
+                for i in range(0, max(len(option["left"]), len(option["right"]))):
                     left = option["left"][i] if (i < len(option["left"])) else ""
                     right = option["right"][i] if (i < len(option["right"])) else ""
                     output.append(outtmp % (left, right))
@@ -294,7 +300,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
         file.flush()
 
     def error(self, message):
-        sys.stderr.write(self.format_usage() + "\n\n")
+        sys.stderr.write(self.format_usage() + "\n")
         sys.stderr.write(("[ERROR] %s" % message) + "\n")
         sys.exit(2)
 
@@ -356,7 +362,7 @@ class APIRequestsHandler:
                 params=self.params,
                 headers=self.headers,
                 cookies=self.cookies,
-                timeout=self.timeout
+                timeout=self.timeout,
             )
         except:
             raise
@@ -368,7 +374,7 @@ class APIRequestsHandler:
                 data=self.data,
                 headers=self.headers,
                 cookies=self.cookies,
-                timeout=self.timeout
+                timeout=self.timeout,
             )
         except:
             raise

