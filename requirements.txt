@@ -1,3 +1,2 @@
-brotlipy >= 0.7.0
-httpx[http2] >= 0.16.1
+httpx[http2,brotli] >= 0.16.1
 requests >= 2.24.0

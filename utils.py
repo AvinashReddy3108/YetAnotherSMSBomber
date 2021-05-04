@@ -1,34 +1,16 @@
-# YetAnotherSMSBomber - A clean, small and powerful SMS bomber script.
-# Copyright (C) 2020 Avinash Reddy <https://github.com/AvinashReddy3108>
-#
-# YetAnotherSMSBomber is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# YetAnotherSMSBomber is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with YetAnotherSMSBomber.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: GPL-3.0-or-later
 
 import argparse
-import os
 import httpx
+import os
 import sys
 import textwrap
-import urllib3
-
-VERIFY = True
-not VERIFY and urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import threading
 
 
 # https://gist.github.com/fonic/fe6cade2e1b9eaf3401cc732f48aeebd
 # https://stackoverflow.com/a/61039719
 class CustomArgumentParser(argparse.ArgumentParser):
-
     # Postition of 'width' argument: https://www.python.org/dev/peps/pep-3102/
     def __init__(self, *args, width=80, **kwargs):
         # At least self.positionals + self.options need to be initialized before calling
@@ -319,14 +301,14 @@ class APIRequestsHandler:
         self.config = config
         self.target = target
         self.headers = self._headers()
-        self.done = False
         self.proxy = proxy
         self.cookies = self._cookies()
         self.verbose = verbose
         self.verify = verify
         self.timeout = timeout
         self.cc = cc
-        self.client = httpx.Client(http2=True, proxies=self.proxy, verify=VERIFY)
+        self.client = httpx.Client(http2=True, proxies=self.proxy, verify=True)
+        self.lock = threading.Lock()
 
     def _headers(self):
         tmp_headers = {
@@ -369,40 +351,56 @@ class APIRequestsHandler:
 
     def _post(self):
         try:
-            return self.client.post(
-                self.config["url"],
-                data=self.data,
-                headers=self.headers,
-                cookies=self.cookies,
-                timeout=self.timeout,
-            )
+            if (
+                "data_type" in self.config
+                and self.config["data_type"].lower() == "json"
+            ):
+                return self.client.post(
+                    self.config["url"],
+                    json=self.data,
+                    headers=self.headers,
+                    cookies=self.cookies,
+                    timeout=self.timeout,
+                )
+            else:
+                return self.client.post(
+                    self.config["url"],
+                    data=self.data,
+                    headers=self.headers,
+                    cookies=self.cookies,
+                    timeout=self.timeout,
+                )
         except:
             raise
 
     def start(self):
         try:
+            self.lock.acquire()
             if self.config["method"] == "GET":
                 self.params = self._params()
                 self.resp = self._get()
             elif self.config["method"] == "POST":
                 self.data = self._data()
                 self.resp = self._post()
-            self.done = True
         except Exception as error:
             (self.verbose or self.verify) and print(
                 "{:<13}: ERROR".format(self.config["name"])
             )
             self.verbose and print("Error text: {}".format(error))
-
-    def status(self):
-        if self.config["identifier"] in self.resp.text:
-            (self.verbose or self.verify) and print(
-                "{:<13}: OK".format(self.config["name"])
-            )
-            return True
-        else:
-            (self.verbose or self.verify) and print(
-                "{:<13}: FAIL".format(self.config["name"])
-            )
-            self.verbose and print("Response: {}".format(self.resp.text))
-            return False
+        finally:
+            try:
+                if self.config["identifier"] in self.resp.text:
+                    (self.verbose or self.verify) and print(
+                        "{:<13}: OK".format(self.config["name"])
+                    )
+                    _result = True
+                else:
+                    (self.verbose or self.verify) and print(
+                        "{:<13}: FAIL".format(self.config["name"])
+                    )
+                    self.verbose and print("Response: {}".format(self.resp.text))
+                    _result = False
+            except AttributeError:
+                _result = False
+            self.lock.release()
+            return _result

