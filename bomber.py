@@ -4,10 +4,16 @@
 
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from utils import APIRequestsHandler, CustomArgumentParser
-import json
 import requests
 import random
 import time
+
+from yaml import load
+
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
 
 ascii_art = r"""
 
@@ -39,8 +45,8 @@ parser.add_argument(
 parser.add_argument(
     "--config-path",
     "-c",
-    default="api_config.json",
-    help="Path to API config file. (NOTE: the file must be in JSON format!)",
+    default="services.yaml",
+    help="Path to API services file. (NOTE: the file must be in proper YAML format!)",
 )
 parser.add_argument(
     "--num", "-N", type=int, help="Number of SMSs to send to TARGET.", default=30
@@ -118,32 +124,34 @@ proxies = get_proxy() if args.proxy else None
 
 # threadsssss
 start = time.time()
-providers = json.load(open(config, "r", encoding="UTF-8"))["providers"]
+providers = (load(open(config, "r"), Loader=Loader))["providers"]
 if args.verify:
     pall = [p for x in providers.values() for p in x]
     print(f"Processing {len(pall)} providers, please wait!\n")
     with ThreadPoolExecutor(max_workers=len(pall)) as executor:
         jobs = []
         for config in pall:
-            jobs.append(executor.submit(
-                (
-                    APIRequestsHandler(
-                        target,
-                        proxy=proxies,
-                        verbose=args.verbose,
-                        verify=True,
-                        timeout=args.timeout,
-                        cc=country_code,
-                        config=config,
-                    )
-                ).start),
+            jobs.append(
+                executor.submit(
+                    (
+                        APIRequestsHandler(
+                            target,
+                            proxy=proxies,
+                            verbose=args.verbose,
+                            verify=True,
+                            timeout=args.timeout,
+                            cc=country_code,
+                            config=config,
+                        )
+                    ).start
+                ),
             )
         for job in as_completed(jobs):
-                result = job.result()
-                if result:
-                    success += 1
-                else:
-                    failed += 1
+            result = job.result()
+            if result:
+                success += 1
+            else:
+                failed += 1
 else:
     while success < no_of_sms:
         with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
