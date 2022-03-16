@@ -34,7 +34,7 @@ pip3 install -r requirements.txt
 
 ## Instructions for Android
 
-Download Termux from the [Play Store](https://play.google.com/store/apps/details?id=com.termux)
+Download Termux from [here](https://f-droid.org/en/packages/com.termux)
 
 Open Termux and enter the following commands:
 
