@@ -129,23 +129,23 @@ if args.verify:
     pall = [p for x in providers.values() for p in x]
     print(f"Processing {len(pall)} providers, please wait!\n")
     with ThreadPoolExecutor(max_workers=len(pall)) as executor:
-        jobs = []
-        for config in pall:
-            jobs.append(
-                executor.submit(
-                    (
-                        APIRequestsHandler(
-                            target,
-                            proxy=proxies,
-                            verbose=args.verbose,
-                            verify=True,
-                            timeout=args.timeout,
-                            cc=country_code,
-                            config=config,
-                        )
-                    ).start
-                ),
+        jobs = [
+            executor.submit(
+                (
+                    APIRequestsHandler(
+                        target,
+                        proxy=proxies,
+                        verbose=args.verbose,
+                        verify=True,
+                        timeout=args.timeout,
+                        cc=country_code,
+                        config=config,
+                    )
+                ).start
             )
+            for config in pall
+        ]
+
         for job in as_completed(jobs):
             result = job.result()
             if result:
@@ -156,7 +156,7 @@ else:
     while success < no_of_sms:
         with ThreadPoolExecutor(max_workers=no_of_threads) as executor:
             jobs = []
-            for i in range(no_of_sms - success):
+            for _ in range(no_of_sms - success):
                 p = APIRequestsHandler(
                     target,
                     proxy=proxies,
@@ -171,8 +171,7 @@ else:
                 )
                 jobs.append(executor.submit(p.start))
             for job in as_completed(jobs):
-                result = job.result()
-                if result:
+                if result := job.result():
                     success += 1
                 else:
                     failed += 1

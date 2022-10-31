@@ -28,16 +28,18 @@ class CustomArgumentParser(argparse.ArgumentParser):
 
         # Positional: argument with only one name not starting with '-' provided as
         # positional argument to method -or- no name and only a 'dest=' argument
-        if len(args) == 0 or (
-            len(args) == 1 and isinstance(args[0], str) and not args[0].startswith("-")
+        if not args or (
+            len(args) == 1
+            and isinstance(args[0], str)
+            and not args[0].startswith("-")
         ):
-            argument["name"] = args[0] if (len(args) > 0) else argument["dest"]
+            argument["name"] = args[0] if args else argument["dest"]
             self.positionals.append(argument)
             return
 
         # Option: argument with one or more flags starting with '-' provided as
         # positional arguments to method
-        argument["flags"] = [item for item in args]
+        argument["flags"] = list(args)
         self.options.append(argument)
 
     def format_usage(self):
@@ -78,26 +80,23 @@ class CustomArgumentParser(argparse.ArgumentParser):
         for option in self.options:
             flags = str.join("/", option["flags"])
             arglist += [
-                "[%s]" % flags
-                if (
-                    "action" in option
-                    and (
-                        option["action"] == "store_true"
-                        or option["action"] == "store_false"
-                    )
-                )
-                else "[%s %s]" % (flags, option["metavar"])
-                if ("metavar" in option)
-                else "[%s %s]" % (flags, option["dest"].upper())
-                if ("dest" in option)
-                else "[%s]" % flags
+                f"[{flags}]"
+                if "action" in option
+                and option["action"] in ["store_true", "store_false"]
+                else f'[{flags} {option["metavar"]}]'
+                if "metavar" in option
+                else f'[{flags} {option["dest"].upper()}]'
+                if "dest" in option
+                else f"[{flags}]"
             ]
+
         for positional in self.positionals:
             arglist += [
-                "%s" % positional["metavar"]
-                if ("metavar" in positional)
-                else "%s" % positional["name"]
+                f'{positional["metavar"]}'
+                if "metavar" in positional
+                else f'{positional["name"]}'
             ]
+
         right = str.join(" ", arglist)
 
         # Determine width for left and right parts based on string lengths, define
@@ -110,7 +109,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             lwidth = max(0, int(self.width / 2) - 1)
             rwidth = int(self.width / 2)
         # outtmp = "%-" + str(lwidth) + "s %-" + str(rwidth) + "s"
-        outtmp = "%-" + str(lwidth) + "s %s"
+        outtmp = f"%-{str(lwidth)}s %s"
 
         # Wrap text for left and right parts, split into separate lines
         wrapper = textwrap.TextWrapper(width=lwidth)
@@ -121,7 +120,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
         right = wrapper.wrap(right)
 
         # Add usage message to output
-        for i in range(0, max(len(left), len(right))):
+        for i in range(max(len(left), len(right))):
             left_ = left[i] if (i < len(left)) else ""
             right_ = right[i] if (i < len(right)) else ""
             output.append(outtmp % (left_, right_))
@@ -139,10 +138,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             and self.program["description"] != ""
             and not str.isspace(self.program["description"])
         ):
-            output.append("")
-            output.append(dewrapper.fill(self.program["description"]))
-            output.append("")
-
+            output.extend(("", dewrapper.fill(self.program["description"]), ""))
         # Add usage message to output
         output.append(self.format_usage())
 
@@ -156,22 +152,24 @@ class CustomArgumentParser(argparse.ArgumentParser):
                 else positional["name"]
             )
         for option in self.options:
-            if "action" in option and (
-                option["action"] == "store_true" or option["action"] == "store_false"
-            ):
+            if "action" in option and option["action"] in [
+                "store_true",
+                "store_false",
+            ]:
                 option["left"] = str.join(", ", option["flags"])
             else:
                 option["left"] = str.join(
                     ", ",
                     [
-                        "%s %s" % (item, option["metavar"])
-                        if ("metavar" in option)
-                        else "%s %s" % (item, option["dest"].upper())
-                        if ("dest" in option)
+                        f'{item} {option["metavar"]}'
+                        if "metavar" in option
+                        else f'{item} {option["dest"].upper()}'
+                        if "dest" in option
                         else item
                         for item in option["flags"]
                     ],
                 )
+
         for argument in self.positionals + self.options:
             if (
                 "help" in argument
@@ -186,9 +184,10 @@ class CustomArgumentParser(argparse.ArgumentParser):
                     + (
                         "(default: '%s')" % argument["default"]
                         if isinstance(argument["default"], str)
-                        else "(default: %s)" % str(argument["default"])
+                        else f'(default: {str(argument["default"])})'
                     )
                 )
+
             elif (
                 "help" in argument
                 and argument["help"] != ""
@@ -199,8 +198,9 @@ class CustomArgumentParser(argparse.ArgumentParser):
                 argument["right"] = (
                     "Default: '%s'" % argument["default"]
                     if isinstance(argument["default"], str)
-                    else "Default: %s" % str(argument["default"])
+                    else f'Default: {str(argument["default"])}'
                 )
+
             else:
                 # argument["right"] = ""
                 argument["right"] = "No description available"
@@ -217,7 +217,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             lwidth = max(0, int(self.width / 2) - 4)
             rwidth = int(self.width / 2)
         # outtmp = "  %-" + str(lwidth) + "s  %-" + str(rwidth) + "s"
-        outtmp = "  %-" + str(lwidth) + "s  %s"
+        outtmp = f"  %-{str(lwidth)}s  %s"
 
         # Wrap text for left and right parts, split into separate lines
         lwrapper = textwrap.TextWrapper(width=lwidth)
@@ -228,12 +228,9 @@ class CustomArgumentParser(argparse.ArgumentParser):
 
         # Add positional arguments to output
         if len(self.positionals) > 0:
-            output.append("")
-            output.append("Positional arguments:")
+            output.extend(("", "Positional arguments:"))
             for positional in self.positionals:
-                for i in range(
-                    0, max(len(positional["left"]), len(positional["right"]))
-                ):
+                for i in range(max(len(positional["left"]), len(positional["right"]))):
                     left = (
                         positional["left"][i] if (i < len(positional["left"])) else ""
                     )
@@ -244,10 +241,9 @@ class CustomArgumentParser(argparse.ArgumentParser):
 
         # Add option arguments to output
         if len(self.options) > 0:
-            output.append("")
-            output.append("Optional arguments:")
+            output.extend(("", "Optional arguments:"))
             for option in self.options:
-                for i in range(0, max(len(option["left"]), len(option["right"]))):
+                for i in range(max(len(option["left"]), len(option["right"]))):
                     left = option["left"][i] if (i < len(option["left"])) else ""
                     right = option["right"][i] if (i < len(option["right"])) else ""
                     output.append(outtmp % (left, right))
@@ -258,10 +254,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
             and self.program["epilog"] != ""
             and not str.isspace(self.program["epilog"])
         ):
-            output.append("")
-            output.append(dewrapper.fill(self.program["epilog"]))
-            output.append("")
-
+            output.extend(("", dewrapper.fill(self.program["epilog"]), ""))
         # Return output as single string
         return str.join("\n", output)
 
@@ -283,7 +276,7 @@ class CustomArgumentParser(argparse.ArgumentParser):
 
     def error(self, message):
         sys.stderr.write(self.format_usage() + "\n")
-        sys.stderr.write(("[ERROR] %s" % message) + "\n")
+        sys.stderr.write(f"[ERROR] {message}" + "\n")
         sys.exit(2)
 
 
@@ -317,20 +310,20 @@ class APIRequestsHandler:
                 Chrome/91.0.4472.124 Safari/537.36"
         }
         if "headers" in self.config:
-            tmp_headers.update(self.config["headers"])
+            tmp_headers |= self.config["headers"]
         return tmp_headers
 
     def _cookies(self):
         tmp_cookies = {}
         if "cookies" in self.config:
-            tmp_cookies.update(self.config["cookies"])
+            tmp_cookies |= self.config["cookies"]
         return tmp_cookies
 
     def _data(self):
-        tmp_data = {}
-        for key, value in self.config["data"].items():
-            tmp_data[key] = value.format(cc=self.cc, target=self.target)
-        return tmp_data
+        return {
+            key: value.format(cc=self.cc, target=self.target)
+            for key, value in self.config["data"].items()
+        }
 
     def _params(self):
         tmp_params = {}
@@ -388,7 +381,7 @@ class APIRequestsHandler:
             (self.verbose or self.verify) and print(
                 "{:<13}: ERROR".format(self.config["name"])
             )
-            self.verbose and print("Error text: {}".format(error))
+            self.verbose and print(f"Error text: {error}")
         finally:
             try:
                 if self.config["identifier"] in self.resp.text:
@@ -400,7 +393,7 @@ class APIRequestsHandler:
                     (self.verbose or self.verify) and print(
                         "{:<13}: FAIL".format(self.config["name"])
                     )
-                    self.verbose and print("Response: {}".format(self.resp.text))
+                    self.verbose and print(f"Response: {self.resp.text}")
                     _result = False
             except AttributeError:
                 _result = False
