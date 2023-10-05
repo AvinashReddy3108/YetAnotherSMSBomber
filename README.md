@@ -7,7 +7,7 @@
 - International bombing available.
 
 ## Requirements
-- Python 3.6+ on MacOS, Android ([Termux](https://termux.com)), Linux, or iOS ([iSH](https://testflight.apple.com/join/97i7KM8O0))
+- Python 3.6+ on MacOS, Android ([Termux](https://termux.com)), Linux, or iOS ([iSH](https://apps.apple.com/us/app/ish-shell/id1436902243))
 
 NOTE: Windows not supported as some of `httpx`'s `http2` libraries can't be installed on it.
 
@@ -54,7 +54,7 @@ pip3 install -r requirements.txt
 
 ## Instructions for iOS/iPadOS(due to the way Apple devices handle ram usage it's gonna be slow but it works :P)
 
-Download iSH from [here](https://testflight.apple.com/join/97i7KM8O0)
+Download iSH from [here](https://apps.apple.com/us/app/ish-shell/id1436902243)
 
 Open iSH and enter the following commands:
 
