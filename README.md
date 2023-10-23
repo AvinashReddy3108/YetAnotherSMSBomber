@@ -1,4 +1,5 @@
-![Explosion!!](https://imgur.com/download/FPZPLK9)
+
+<a href="https://imgur.com/download/FPZPLK9"><img src="https://media.giphy.com/media/ceHKRKMR6Ojao/giphy.gif" alt="Explosion!!"></a>
 
 ## Features
 - Lots of integrated SMS APIs, and support for custom API configuration!
